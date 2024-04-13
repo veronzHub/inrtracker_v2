@@ -1,3 +1,3 @@
-## INTracker
+## INRTracker
 
 - More coming soon
