@@ -1,54 +1,45 @@
-import DeployButton from "../components/DeployButton";
-import AuthButton from "../components/AuthButton";
-import { createClient } from "@/utils/supabase/server";
-import ConnectSupabaseSteps from "@/components/tutorial/ConnectSupabaseSteps";
-import SignUpUserSteps from "@/components/tutorial/SignUpUserSteps";
-import Header from "@/components/Header";
+import Header from "@/components/ui/home/header";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ImDroplet } from "react-icons/im";
 
 export default async function Index() {
-  const canInitSupabaseClient = () => {
-    // This function is just for the interactive tutorial.
-    // Feel free to remove it once you have Supabase connected.
-    try {
-      createClient();
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
-
-  const isSupabaseConnected = canInitSupabaseClient();
-
   return (
-    <div className="flex-1 w-full flex flex-col gap-20 items-center">
-      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-        <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-          <DeployButton />
-          {isSupabaseConnected && <AuthButton />}
+    <main>
+      <Header />
+
+      <section className="flex min-h-[calc(100vh-100px)] items-center justify-center container g-x-10 mx-auto pt-15 pb-15">
+        <div className="pl-10 pr-20">
+          <h1 className="text-7xl font-semibold mb-8">
+            <span className="block mb-3">INR Tracking</span>
+            <span className="text-sky-500">Made Simple</span>
+          </h1>
+          <p className="text-2xl mb-8">
+            Record your INR, drug dosages, and more with our platform tailored
+            specifically for Warfarin users. Take the hassle out of tracking and
+            start focusing on your health today.
+          </p>
+          <p>
+            <Link href="/auth/register">
+              <Button
+                size="lg"
+                variant="default"
+                className="text-2xl pt-10 pb-10"
+              >
+                Sign up now
+              </Button>
+            </Link>
+          </p>
         </div>
-      </nav>
-
-      <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 max-w-4xl px-3">
-        <Header />
-        <main className="flex-1 flex flex-col gap-6">
-          <h2 className="font-bold text-4xl mb-4">Next steps</h2>
-          {isSupabaseConnected ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-        </main>
-      </div>
-
-      <footer className="w-full border-t border-t-foreground/10 p-8 flex justify-center text-center text-xs">
-        <p>
-          Powered by{" "}
-          <a
-            href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-            target="_blank"
-            className="font-bold hover:underline"
-            rel="noreferrer"
-          >
-            Supabase
-          </a>
-        </p>
-      </footer>
-    </div>
+        <div>
+          <ImDroplet className="h-96 w-96 text-col text-red-500" />
+        </div>
+      </section>
+      <section className="min-h-96 p-40 text-white bg-gradient-to-r from-sky-300 to-sky-700">
+        <div className="container text-center text-5xl">
+          <h2>Everything you need to manage your INR</h2>
+        </div>
+      </section>
+    </main>
   );
 }

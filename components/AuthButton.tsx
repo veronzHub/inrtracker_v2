@@ -1,6 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { Button } from "./ui/button";
+import { signOut } from "@/app/actions/auth";
 
 export default async function AuthButton() {
   const supabase = createClient();
@@ -9,29 +10,20 @@ export default async function AuthButton() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const signOut = async () => {
-    "use server";
-
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    return redirect("/login");
-  };
-
   return user ? (
     <div className="flex items-center gap-4">
-      Hey, {user.email}!
+      <Link href="/dashboard">Go to Dashboard</Link>
       <form action={signOut}>
-        <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">
+        <Button size="lg" variant="default">
           Logout
-        </button>
+        </Button>
       </form>
     </div>
   ) : (
-    <Link
-      href="/login"
-      className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
-    >
-      Login
+    <Link href="/auth/login">
+      <Button size="lg" variant="default">
+        Login
+      </Button>
     </Link>
   );
 }
