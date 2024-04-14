@@ -143,7 +143,7 @@ export const insertWarfarinSchedule = async (formData: FormData) => {
   const supabase = createClient();
 
   const { data, error } = await supabase
-    .from("warfarin_schedule")
+    .from("warfarin_schedules")
     .insert({ start_date })
     .select("id");
 
@@ -152,6 +152,7 @@ export const insertWarfarinSchedule = async (formData: FormData) => {
     return error;
   }
 
+  console.log("whas", data);
   revalidatePath(`/dashboard/warfarin/schedule`);
   console.log(data);
   return data;

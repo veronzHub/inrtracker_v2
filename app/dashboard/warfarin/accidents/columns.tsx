@@ -60,11 +60,16 @@ export const columns: ColumnDef<TCols>[] = [
     },
   },
   {
-    accessorKey: "missed",
+    accessorKey: "type",
     cell: ({ row }) => {
       const thisone = row.original;
 
-      return <>{thisone.missed ? "Missed" : ""}</>;
+      return (
+        <>
+          {thisone.missed ? "Missed" : ""}
+          {thisone.incorrect ? "Incorrect" : ""}
+        </>
+      );
     },
     header: ({ column }) => {
       return (
@@ -72,29 +77,19 @@ export const columns: ColumnDef<TCols>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Missed
+          Type
           <HiMiniChevronUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-  },
-  {
-    accessorKey: "incorrect",
-    cell: ({ row }) => {
-      const thisone = row.original;
-
-      return <>{thisone.incorrect ? "Incorrect" : ""}</>;
-    },
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Incorrect
-          <HiMiniChevronUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
+    sortingFn: (rowA, rowB, columnId) => {
+      const typeValue = (row) => {
+        if (row.missed && row.incorrect) return 0;
+        if (row.missed) return 1;
+        if (row.incorrect) return 2;
+        return 3;
+      };
+      return typeValue(rowA.original) - typeValue(rowB.original);
     },
   },
   {

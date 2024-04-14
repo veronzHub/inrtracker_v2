@@ -95,6 +95,7 @@ export default function WarfarinScheduleInsertForm2({
     dateData.append("start_date", formattedDate);
 
     const dateId = await insertWarfarinSchedule(dateData);
+    console.log(dateId);
 
     const dosagesData = [];
 
@@ -217,6 +218,10 @@ function DayOfWeek({
         <p className="font-bold text-xl mb-4">
           {day.name.charAt(0).toUpperCase() + day.name.slice(1)}
         </p>
+        <div className="grid grid-cols-2 items-baseline text-xs text-slate-400 mb-2">
+          <p>Quantity</p>
+          <p>Pill Type</p>
+        </div>
         {data.map((item) => (
           <div key={`${day.id}-${item.pill_strength}`}>
             <FormField
@@ -226,7 +231,7 @@ function DayOfWeek({
                 <FormItem className="grid grid-cols-2 items-baseline">
                   <FormControl>
                     <Input
-                      placeholder="#"
+                      placeholder=""
                       type="number"
                       step="0.5"
                       {...field}
