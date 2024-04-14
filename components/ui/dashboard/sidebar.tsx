@@ -33,7 +33,7 @@ export default function DashboardSidebar() {
 
   return (
     <aside className="fixed w-14 h-screen flex flex-col bg-slate-50 hide-scrollbar z-50">
-      <nav className="py-2 z-10 h-full w-14 hover:w-[14rem] border-r bg-studio border-default transition-width duration-200 flex flex-col overflow-x-hidden justify-between overflow-y-auto bg-slate-50">
+      <nav className="py-2 z-10 h-full w-14 hover:w-[14rem] border-r bg-studio border-default transition-width duration-200 flex flex-col overflow-x-hidden justify-between overflow-y-auto bg-slate-50 hide-scrollbar">
         <ul className="flex flex-col gap-y-5 h-full justify-start px-2">
           <li>
             <Link
@@ -80,7 +80,7 @@ export default function DashboardSidebar() {
                     pathname === "/dashboard/warfarin/overview" ||
                     pathname === "/dashboard/warfarin/schedule" ||
                     pathname === "/dashboard/warfarin/settings" ||
-                    pathname === "/dashboard/warfarin/acccidents",
+                    pathname === "/dashboard/warfarin/accidents",
                 }
               )}
             >

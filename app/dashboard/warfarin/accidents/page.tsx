@@ -28,6 +28,7 @@ export default async function WarfarinAccidents() {
           <h2 className="text-2xl font-bold mb-3">
             Missed or Incorrect Dosages
           </h2>
+
           <InsertAccidentForm />
         </div>
 

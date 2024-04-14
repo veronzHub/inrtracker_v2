@@ -204,6 +204,24 @@ export const columns: ColumnDef<TCols>[] = [
   //   },
 ];
 
+function FullPill({ color }) {
+  return (
+    <span
+      className="inline-block bg-blue-500 rounded-full h-4 w-8 rotate-45 mb-4"
+      style={{ backgroundColor: `#${color}` }}
+    ></span>
+  );
+}
+
+function HalfPill({ color }) {
+  return (
+    <span
+      className="inline-block bg-blue-500 rounded-r-full h-4 w-5 rotate-45 mb-4 ml-1"
+      style={{ backgroundColor: `#${color}` }}
+    ></span>
+  );
+}
+
 const numberToWord = (num: number) => {
   const words = {
     0.5: "Half",
@@ -231,6 +249,21 @@ const numberToWord = (num: number) => {
 };
 
 function DisplayRows({ rowItems }) {
+  const renderPills = (item) => {
+    const pills = [];
+    const fullPillCount = Math.floor(item.dose);
+    const halfPillCount = item.dose % 1 === 0.5 ? 1 : 0;
+
+    for (let i = 0; i < fullPillCount; i++) {
+      pills.push(<FullPill key={`full-${i}`} color={item.hex} />);
+    }
+
+    for (let i = 0; i < halfPillCount; i++) {
+      pills.push(<HalfPill key={`half-${i}`} color={item.hex} />);
+    }
+
+    return pills;
+  };
   return (
     <ul>
       {rowItems.every((item) => item.dose === 0) ? (
@@ -243,24 +276,19 @@ function DisplayRows({ rowItems }) {
           {rowItems.map((item, index) => (
             <li key={index}>
               {item.dose > 0 && (
-                <p
-                  className="p-2 rounded-md"
-                  style={{
-                    backgroundColor: `#${item.hex}99`,
-                  }}
-                >
-                  <span>
-                    {numberToWord(item.dose)}{" "}
-                    {item.dose <= 1 ? "pill" : "pills"} - ({item.strength}mg)
-                  </span>
-                </p>
+                <>
+                  <p className="flex flex-wrap mt-2">{renderPills(item)}</p>
+                  <p>
+                    <span>
+                      {numberToWord(item.dose)}{" "}
+                      {item.dose <= 1 ? "pill" : "pills"} - ({item.strength}mg)
+                    </span>
+                  </p>
+                </>
               )}
             </li>
           ))}
           <li className="text-slate-500 mt-3 text-xs">
-            {/* <div className="float-left mr-3">
-              <UpdateDateForm />
-            </div> */}
             Total:{" "}
             {rowItems
               .filter((item) => item.dose > 0)

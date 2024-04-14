@@ -164,7 +164,7 @@ export default function UpdateForm({
                           <FormControl>
                             <RadioGroupItem value="missed" />
                           </FormControl>
-                          <FormLabel className="font-normal">
+                          <FormLabel className="font-normal cursor-pointer">
                             Missed Dosage
                           </FormLabel>
                         </FormItem>
@@ -172,7 +172,7 @@ export default function UpdateForm({
                           <FormControl>
                             <RadioGroupItem value="incorrect" />
                           </FormControl>
-                          <FormLabel className="font-normal">
+                          <FormLabel className="font-normal cursor-pointer">
                             Incorrect Dosage
                           </FormLabel>
                         </FormItem>

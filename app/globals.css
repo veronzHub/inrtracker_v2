@@ -41,7 +41,9 @@ aside nav:hover .subNavIcons {
     --popover-foreground: 222.2 84% 4.9%;
 
     /* --primary: 201.3 96.3% 32.2%; */
-    --primary: 222.2 47.4% 11.2%;
+    /* --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%; */
+    --primary: 204.7 96.9% 32.7%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;

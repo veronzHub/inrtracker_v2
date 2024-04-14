@@ -66,8 +66,20 @@ export const columns: ColumnDef<TCols>[] = [
 
       return (
         <>
-          {thisone.missed ? "Missed" : ""}
-          {thisone.incorrect ? "Incorrect" : ""}
+          {thisone.missed ? (
+            <span className="bg-red-400  font-semibold  rounded-md p-2">
+              Missed
+            </span>
+          ) : (
+            ""
+          )}
+          {thisone.incorrect ? (
+            <span className="bg-yellow-200   font-semibold  rounded-md p-2">
+              Incorrect
+            </span>
+          ) : (
+            ""
+          )}
         </>
       );
     },

@@ -269,3 +269,20 @@ export const updateMissedWarfarinDosage = async (
   revalidatePath(`/dashboard/warfarin/accidents`);
   return { message: "success" };
 };
+
+export const getLastTwoWarfarinSchedules = async () => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("warfarin_schedules")
+    .select("id, start_date")
+    .order("start_date", { ascending: false })
+    .limit(2);
+
+  if (error) {
+    console.log(error);
+    throw new Error("Error fetching data");
+  }
+
+  return data;
+};

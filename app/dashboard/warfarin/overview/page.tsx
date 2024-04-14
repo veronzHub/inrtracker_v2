@@ -1,3 +1,14 @@
+import { getLastTwoWarfarinSchedules } from "@/app/actions/warfarin";
+import { cn } from "@/lib/utils";
+
+function getToday() {
+  return new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
+}
+
 function getWeek() {
   const today = new Date();
   const currentDayOfWeek = today.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
@@ -27,8 +38,12 @@ function getWeek() {
   return weekDays;
 }
 
-export default function WarfarinOverview() {
+export default async function WarfarinOverview() {
   const weekDays = getWeek();
+
+  const lastTwoWarfarinSchedules = await getLastTwoWarfarinSchedules();
+
+  console.log(lastTwoWarfarinSchedules);
 
   return (
     <div>
@@ -36,10 +51,16 @@ export default function WarfarinOverview() {
         Medication Overview
       </h1>
       <div>
-        <h2>Current Week</h2>
-        <ul>
+        <ul className="flex gap-4">
           {weekDays.map((day, index) => (
-            <li key={index}>{day}</li>
+            <li
+              key={index}
+              className={cn("bg-white w-full text-center p-5 rounded-md", {
+                "font-bold bg-slate-500 text-white": day == getToday(),
+              })}
+            >
+              {day}
+            </li>
           ))}
         </ul>
       </div>
