@@ -1,5 +1,6 @@
 "use client";
 
+import { GeistSans } from "geist/font/sans";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -41,13 +42,16 @@ export default function InrChart({ data }: TInrChart) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false); // Set loading to false after a delay
-    }, 2000); // Delay in milliseconds
+    }, 1000); // Delay in milliseconds
     return () => clearTimeout(timer); // Cleanup timer on unmount
   }, []);
 
-  console.log("chart loaded");
+  ChartJS.defaults.borderColor = "rgb(226, 232, 240)";
+  ChartJS.defaults.color = "rgb(100, 116, 139)";
 
-  const limitedData = data.slice(-8);
+  const limitedData = data.slice(0, 8);
+
+  console.log(data);
 
   const formData = {
     labels: limitedData.map((item) => item.date).reverse(),
@@ -56,9 +60,12 @@ export default function InrChart({ data }: TInrChart) {
         label: "INR Value",
         data: limitedData.map((item) => item.inr).reverse(),
         fill: false,
-        borderColor: "rgb(75, 192, 192)",
         tension: 0.1,
         pointRadius: 10,
+        pointBorderColor: "rgba(3, 98, 164, 1)",
+        backgroundColor: "rgba(3, 98, 164, 1)",
+        borderColor: "rgba(3, 98, 164, 1)",
+        pointBackgroundColor: "rgba(3, 98, 164, 1)",
       },
     ],
   };
@@ -90,6 +97,7 @@ export default function InrChart({ data }: TInrChart) {
             yMax: 2.5,
             backgroundColor: "rgba(187, 247, 208, 0.4)",
             borderColor: "rgba(187, 247, 208, 0.5)",
+            drawTime: "beforeDraw",
           },
         },
       },

@@ -26,7 +26,7 @@ export default function DeleteForm({ inrid, note, date, inr }: TDeleteForm) {
     <>
       <AlertDialog>
         <AlertDialogTrigger>
-          <AiFillDelete className="w-6 h-6 " />
+          <AiFillDelete className="w-6 h-6 text-slate-700" />
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>

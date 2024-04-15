@@ -95,7 +95,7 @@ export default function UpdateForm({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <MdModeEditOutline className="w-6 h-6" />
+        <MdModeEditOutline className="w-6 h-6 text-slate-700" />
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

@@ -36,7 +36,7 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { inrPut } from "@/app/actions/inr";
-import { InrSchema } from "../formSchema";
+import { InrSchema } from "./formSchema";
 import { useState } from "react";
 
 type TUpdateInrForm = {
@@ -86,7 +86,7 @@ export default function UpdateInrForm({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-        <MdModeEditOutline className="w-6 h-6" />
+        <MdModeEditOutline className="w-6 h-6 text-slate-700" />
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

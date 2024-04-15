@@ -1,5 +1,5 @@
 import { inrGet } from "@/app/actions/inr";
-import InrChart from "./overview/chart";
+import InrChart from "./chart";
 import Table from "./records/table";
 
 export default async function InrResults() {

@@ -15,7 +15,15 @@ export default async function Dashboard() {
   return (
     <div>
       <h1 className="text-5xl font-bold mb-10 text-sky-700">Dashboard</h1>
-      <p className="mb-20">coming soon...</p>
+      <p className="mb-20">{getToday()}</p>
     </div>
   );
+}
+
+function getToday() {
+  return new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
 }

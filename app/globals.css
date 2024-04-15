@@ -25,7 +25,6 @@ aside nav:hover .subNavIcons {
 
 .hide-scrollbar {
   scrollbar-width: none;
-  /* overflow-y: hidden; */
 }
 
 /* https://github.com/shadcn-ui/ui/issues/669 */

@@ -1,8 +1,8 @@
 import { inrGet } from "@/app/actions/inr";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import INRInsertForm from "./insert-form";
-import { columns } from "./columns";
+import INRInsertForm from "../insert-form";
+import { columns } from "../columns";
 import { DataTable } from "@/components/ui/data-table";
 
 export default async function InrManage() {
@@ -30,7 +30,7 @@ export default async function InrManage() {
 
         {data !== null && data.length > 0 ? (
           <div className="flex-grow md:shrink-0">
-            <h2 className="text-2xl font-bold mb-3">INR History</h2>
+            <h2 className="text-2xl font-bold mb-3">History</h2>
             <DataTable columns={columns} data={data} />
             {/* <Table data={data} /> */}
           </div>

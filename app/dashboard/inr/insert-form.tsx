@@ -24,7 +24,7 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { inrInsert } from "@/app/actions/inr";
-import { InrSchema } from "../formSchema";
+import { InrSchema } from "./formSchema";
 
 export default function INRInsertForm() {
   const form = useForm<z.infer<typeof InrSchema>>({

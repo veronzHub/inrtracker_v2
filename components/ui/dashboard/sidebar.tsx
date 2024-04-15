@@ -21,13 +21,8 @@ import { MdError } from "react-icons/md";
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
-  const [inrToggle, setInrToggle] = useState(
-    pathname.includes("/dashboard/inr/overview") ||
-      pathname.includes("/dashboard/inr/records")
-  );
   const [medicationToggle, setMedicationToggle] = useState(
-    pathname.includes("/dashboard/warfarin/overview") ||
-      pathname.includes("/dashboard/warfarin/schedule") ||
+    pathname.includes("/dashboard/warfarin/schedule") ||
       pathname.includes("/dashboard/warfarin/settings")
   );
 
@@ -77,7 +72,6 @@ export default function DashboardSidebar() {
                 "relative flex h-10 grow items-center gap-2 rounded-md p-3 font-medium hover:bg-sky-100 hover:text-sky-600 md:flex-none md:justify-start md:p-2 md:px-3 cursor-pointer",
                 {
                   "bg-slate-200 text-sky-800":
-                    pathname === "/dashboard/warfarin/overview" ||
                     pathname === "/dashboard/warfarin/schedule" ||
                     pathname === "/dashboard/warfarin/settings" ||
                     pathname === "/dashboard/warfarin/accidents",
@@ -105,26 +99,6 @@ export default function DashboardSidebar() {
                 hidden: !medicationToggle,
               })}
             >
-              <li>
-                <Link
-                  href="/dashboard/warfarin/overview"
-                  className={cn(
-                    "relative h-10 w-full transition-all duration-200 flex items-center rounded justify-center hover:bg-sky-100 hover:text-sky-600",
-                    {
-                      "bg-slate-200 text-sky-800":
-                        pathname === "/dashboard/warfarin/overview",
-                    }
-                  )}
-                >
-                  <span className="absolute text-md left-0 top-0 flex rounded h-10 w-10 items-center justify-center">
-                    <MdDashboard />
-                  </span>
-
-                  <span className="min-w-[128px] absolute left-12 transition-all">
-                    Overview
-                  </span>
-                </Link>
-              </li>
               <li>
                 <Link
                   href="/dashboard/warfarin/schedule"
@@ -188,79 +162,25 @@ export default function DashboardSidebar() {
             </ul>
           </li>
           <li>
-            <div
-              onClick={() => setInrToggle(!inrToggle)}
+            <Link
+              href="/dashboard/inr"
               className={cn(
-                "relative flex h-10 grow items-center gap-2 rounded-md p-3 font-medium hover:bg-sky-100 hover:text-sky-600 md:flex-none md:justify-start md:p-2 md:px-3 cursor-pointer",
+                "relative h-10 w-full transition-all duration-200 flex items-center rounded justify-center hover:bg-sky-100 hover:text-sky-600",
                 {
-                  "bg-slate-200 text-sky-800":
-                    pathname === "/dashboard/inr/overview" ||
-                    pathname === "/dashboard/inr/records",
+                  "bg-slate-200 text-sky-800": pathname === "/dashboard/inr",
                 }
               )}
             >
-              <div className="flex items-center gap-2">
-                <span className="absolute text-2xl left-0 top-0 flex rounded h-10 w-10 items-center justify-center">
-                  <FaDroplet />
-                </span>
-                <div className="flex w-[calc(100%-4rem)] absolute left-12 transition-all">
-                  <span>INR</span>
-                  <span className="ml-auto flex items-center">
-                    {inrToggle ? <IoMdArrowDropdown /> : <IoMdArrowDropleft />}
-                  </span>
-                </div>
-              </div>
-            </div>
-            <ul
-              className={cn(
-                "subNavIcons flex gap-2 flex-col text-bold ml-12 mt-2",
-                {
-                  hidden: !inrToggle,
-                }
-              )}
-            >
-              <li>
-                <Link
-                  href="/dashboard/inr/overview"
-                  className={cn(
-                    "relative h-10 w-full transition-all duration-200 flex items-center rounded justify-center hover:bg-sky-100 hover:text-sky-600",
-                    {
-                      "bg-slate-200 text-sky-800":
-                        pathname === "/dashboard/inr/overview",
-                    }
-                  )}
-                >
-                  <span className="absolute text-md left-0 top-0 flex rounded h-10 w-10 items-center justify-center">
-                    <MdDashboard />
-                  </span>
+              <span className="absolute text-2xl left-0 top-0 flex rounded h-10 w-10 items-center justify-center">
+                <FaDroplet />
+              </span>
 
-                  <span className="min-w-[128px] absolute left-12 transition-all">
-                    Overview
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/dashboard/inr/records"
-                  className={cn(
-                    "relative h-10 w-full transition-all duration-200 flex items-center rounded justify-center hover:bg-sky-100 hover:text-sky-600",
-                    {
-                      "bg-slate-200 text-sky-800":
-                        pathname === "/dashboard/inr/records",
-                    }
-                  )}
-                >
-                  <span className="absolute text-md left-0 top-0 flex rounded h-10 w-10 items-center justify-center">
-                    <MdEditDocument />
-                  </span>
-
-                  <span className="min-w-[128px] absolute left-12 transition-all">
-                    Records
-                  </span>
-                </Link>
-              </li>
-            </ul>
+              <span className="min-w-[128px] absolute left-12 transition-all">
+                INR
+              </span>
+            </Link>
           </li>
+
           <li className="mt-auto">
             <form action={signOut}>
               <Button

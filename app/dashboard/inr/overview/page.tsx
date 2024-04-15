@@ -2,7 +2,7 @@ import { inrGet } from "@/app/actions/inr";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import InrChart from "./chart";
+// import InrChart from "../chart";
 
 export default async function InrOverview() {
   const supabase = createClient();
@@ -23,7 +23,7 @@ export default async function InrOverview() {
 
       {data !== null && data.length > 0 ? (
         <>
-          <InrChart data={data} />
+          {/* <InrChart data={data} /> */}
 
           {/* <Table data={data} /> */}
         </>

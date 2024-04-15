@@ -1,7 +1,12 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import INRInsertForm from "./records/insert-form";
+import INRInsertForm from "./insert-form";
 import InrResults from "./results";
+import { inrGet } from "@/app/actions/inr";
+import { columns } from "./columns";
+import { DataTable } from "@/components/ui/data-table";
+import InrChart from "./chart";
+import Link from "next/link";
 
 export default async function Inr() {
   const supabase = createClient();
@@ -13,6 +18,7 @@ export default async function Inr() {
   if (!user) {
     return redirect("/auth/login");
   }
+  const data = await inrGet();
 
   return (
     <div>
@@ -24,7 +30,22 @@ export default async function Inr() {
           <INRInsertForm />
         </div>
 
-        <div className="flex-grow md:shrink-0">{/* <InrResults /> */}</div>
+        <div className="flex-grow md:shrink-0">
+          {data !== null && data.length > 0 ? (
+            <div className="flex-grow md:shrink-0">
+              <InrChart data={data} />
+              <h2 className="text-2xl font-bold mb-3">INR History</h2>
+              <DataTable columns={columns} data={data} />
+            </div>
+          ) : (
+            <div className="flex text-center items-center justify-center flex-1">
+              <div>
+                <h2 className="text-xl font-bold mb-2">No INR's Found</h2>{" "}
+                <p>Use the form on the left to log your first INR.</p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
