@@ -20,7 +20,7 @@ export default async function WarfarinSettings() {
   return (
     <>
       <h1 className="text-5xl font-bold mb-10 text-sky-700">
-        Warfarin Settings
+        Warfarin Prescription
       </h1>
 
       <div className="flex gap-10 flex-col lg:flex-row">

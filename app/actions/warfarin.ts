@@ -2,7 +2,7 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
-import { WarfarinPreferencesSchema } from "../dashboard/warfarin/settings/formSchema";
+import { WarfarinPreferencesSchema } from "../dashboard/warfarin/prescription/formSchema";
 import { idText } from "typescript";
 
 export type FormState = {

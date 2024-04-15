@@ -10,20 +10,19 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { FaDroplet } from "react-icons/fa6";
 import { GiWaterDrop } from "react-icons/gi";
 import { FaPills } from "react-icons/fa";
-import { MdDashboard } from "react-icons/md";
-import { MdEditDocument } from "react-icons/md";
 import { FaCalendarDays } from "react-icons/fa6";
 import { IoMdSettings } from "react-icons/io";
 import { TbLogout } from "react-icons/tb";
 import { Button } from "../button";
 import { signOut } from "@/app/actions/auth";
 import { MdError } from "react-icons/md";
+import { FaPrescriptionBottle } from "react-icons/fa";
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
   const [medicationToggle, setMedicationToggle] = useState(
     pathname.includes("/dashboard/warfarin/schedule") ||
-      pathname.includes("/dashboard/warfarin/settings")
+      pathname.includes("/dashboard/warfarin/prescription")
   );
 
   return (
@@ -73,7 +72,7 @@ export default function DashboardSidebar() {
                 {
                   "bg-slate-200 text-sky-800":
                     pathname === "/dashboard/warfarin/schedule" ||
-                    pathname === "/dashboard/warfarin/settings" ||
+                    pathname === "/dashboard/warfarin/prescription" ||
                     pathname === "/dashboard/warfarin/accidents",
                 }
               )}
@@ -141,7 +140,7 @@ export default function DashboardSidebar() {
               </li>
               <li>
                 <Link
-                  href="/dashboard/warfarin/settings"
+                  href="/dashboard/warfarin/prescription"
                   className={cn(
                     "relative h-10 w-full transition-all duration-200 flex items-center rounded justify-center hover:bg-sky-100 hover:text-sky-600",
                     {
@@ -151,11 +150,11 @@ export default function DashboardSidebar() {
                   )}
                 >
                   <span className="absolute text-md left-0 top-0 flex rounded h-10 w-10 items-center justify-center">
-                    <IoMdSettings />
+                    <FaPrescriptionBottle />
                   </span>
 
                   <span className="min-w-[128px] absolute left-12 transition-all">
-                    Settings
+                    Prescription
                   </span>
                 </Link>
               </li>
