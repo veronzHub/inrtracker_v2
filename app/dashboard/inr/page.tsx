@@ -5,6 +5,8 @@ import { inrGet } from "@/app/actions/inr";
 import { columns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 import InrChart from "./chart";
+import H1 from "@/components/ui/dashboard/h1";
+import H2 from "@/components/ui/dashboard/h2";
 
 export default async function Inr() {
   const supabase = createClient();
@@ -20,31 +22,29 @@ export default async function Inr() {
 
   return (
     <div>
-      <h1 className="text-5xl font-bold mb-10 text-sky-700">INR</h1>
+      <H1>INR</H1>
 
       <div className="flex gap-10 flex-col xl:flex-row">
         <div className="xl:w-96 w-full">
-          <h2 className="text-2xl font-bold mb-3">Add New INR</h2>
+          <H2>Add New INR</H2>
           <INRInsertForm />
         </div>
 
-        <div className="flex-grow md:shrink-0">
-          {data !== null && data.length > 0 ? (
-            <div className="flex-grow md:shrink-0">
-              <h2 className="text-2xl font-bold mb-3">Trends</h2>
-              <InrChart data={data} />
-              <h2 className="text-2xl font-bold mb-3">INR History</h2>
-              <DataTable columns={columns} data={data} />
+        {data !== null && data.length > 0 ? (
+          <div className="flex-grow">
+            <H2>Trends</H2>
+            <InrChart data={data} />
+            <H2>INR History</H2>
+            <DataTable columns={columns} data={data} />
+          </div>
+        ) : (
+          <div className="flex text-center items-center justify-center flex-1">
+            <div>
+              <H2>No INR's Found</H2>{" "}
+              <p>Use the form on the left to log your first INR.</p>
             </div>
-          ) : (
-            <div className="flex text-center items-center justify-center flex-1">
-              <div>
-                <h2 className="text-xl font-bold mb-2">No INR's Found</h2>{" "}
-                <p>Use the form on the left to log your first INR.</p>
-              </div>
-            </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

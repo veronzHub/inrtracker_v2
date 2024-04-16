@@ -9,7 +9,7 @@ export default function DashboardLayout({
   return (
     <main className="flex min-h-screen">
       <DashboardSidebar />
-      <div className="flex-1">
+      <div className="flex-1 max-w-full">
         {/* <DashboardHeader /> */}
         <div className="pr-10 py-10 pl-24">{children}</div>
       </div>

@@ -9,6 +9,7 @@ import {
   getWarfarinSchedules,
 } from "../actions/warfarin";
 import Tasks from "./tasks";
+import H1 from "@/components/ui/dashboard/h1";
 
 export default async function Dashboard() {
   const supabase = createClient();
@@ -76,16 +77,14 @@ export default async function Dashboard() {
 
   return (
     <div>
-      <h1 className="text-5xl font-bold mb-10 text-sky-700">
-        <span>
-          {new Date().toLocaleDateString("en-US", {
-            weekday: "long",
-          })}{" "}
-        </span>
+      <H1>
+        {new Date().toLocaleDateString("en-US", {
+          weekday: "long",
+        })}{" "}
         <span className="text-slate-700">{getToday()}</span>
-      </h1>
+      </H1>
 
-      <div className="grid gap-5 grid-cols-3 mb-10">
+      <div className="grid gap-5 grid-cols-1 md:grid-cols-3 mb-10">
         {inrs.length === 0 ||
         warfarinPrescription.length === 0 ||
         warfarinSchedules.length === 0 ? (

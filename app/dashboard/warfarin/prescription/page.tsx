@@ -3,6 +3,8 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import WarfarinPreferencesInsertForm from "./insert-form";
 import Display from "./display";
+import H1 from "@/components/ui/dashboard/h1";
+import H2 from "@/components/ui/dashboard/h2";
 
 export default async function WarfarinSettings() {
   const supabase = createClient();
@@ -19,13 +21,11 @@ export default async function WarfarinSettings() {
   const warfarinData = await getWarfarin();
   return (
     <>
-      <h1 className="text-5xl font-bold mb-10 text-sky-700">
-        Warfarin Prescription
-      </h1>
+      <H1>Warfarin Prescription</H1>
 
       <div className="flex gap-10 flex-col lg:flex-row">
         <div className="lg:w-96 w-full">
-          <h2 className="text-2xl font-bold mb-3">Add Warfarin Pill</h2>
+          <H2>Add Warfarin Pill</H2>
           <WarfarinPreferencesInsertForm
             warfarinData={warfarinData}
             getWarfarinPreferencesData={data}
@@ -39,9 +39,7 @@ export default async function WarfarinSettings() {
         ) : (
           <div className="flex text-center items-center justify-center flex-1">
             <div>
-              <h2 className="text-xl font-bold mb-2">
-                No Warfarin Pill Details Found
-              </h2>
+              <H2>No Warfarin Pill Details Found</H2>
               <p>Use the form on the left to save your prescribed pill type.</p>
             </div>
           </div>

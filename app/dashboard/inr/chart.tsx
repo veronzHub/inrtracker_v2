@@ -105,16 +105,14 @@ export default function InrChart({ data }: TInrChart) {
   };
 
   return (
-    <div>
-      <div className="flex justify-center items-center mb-10 border border-slate-200 rounded-md p-10  bg-white h-96">
-        {loading ? (
-          <div>
-            <Spinner />
-          </div>
-        ) : (
-          <Line options={options} data={formData} />
-        )}
-      </div>
+    <div className="flex justify-center items-center mb-10 border border-slate-200 rounded-md p-10  bg-white h-96 w-full">
+      {loading ? (
+        <div>
+          <Spinner />
+        </div>
+      ) : (
+        <Line options={options} data={formData} />
+      )}
     </div>
   );
 }

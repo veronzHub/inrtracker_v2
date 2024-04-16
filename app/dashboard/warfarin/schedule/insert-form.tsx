@@ -30,17 +30,14 @@ import { Button } from "@/components/ui/button";
 
 import { Input } from "@/components/ui/input";
 
-import {
-  WarfarinScheduleInsertSchema,
-  daysOfWeek,
-} from "@/app/dashboard/warfarin/schedule/formSchema";
+import { WarfarinScheduleInsertSchema2 } from "@/app/dashboard/warfarin/schedule/formSchema";
 
-const FormDefaultValues = (data: TWarfarinScheduleForm) => {
+const FormDefaultValues = (data: TWarfarinScheduleForm, daysOfWeekData) => {
   const defaultValues = {};
 
-  daysOfWeek.forEach((day) => {
+  daysOfWeekData.forEach((day) => {
     data.forEach((item) => {
-      const key = `${day}-${item.pill_strength}`;
+      const key = `${day.id}-${item.pill_strength}`;
       defaultValues[key] = "";
     });
   });
@@ -59,24 +56,33 @@ export type TWarfarinScheduleForm = {
   } | null;
 }[];
 
+export type TdaysOfWeekData = {
+  id: number;
+  name: string | null;
+}[];
+
 export default function WarfarinScheduleInsertForm({
   data,
+  daysOfWeekData,
 }: {
   data: TWarfarinScheduleForm;
+  daysOfWeekData: TdaysOfWeekData;
 }) {
-  const WarfarinScheduleSchema = WarfarinScheduleInsertSchema(data);
+  const WarfarinScheduleSchema = WarfarinScheduleInsertSchema2(
+    data,
+    daysOfWeekData
+  );
 
   const form = useForm<z.infer<typeof WarfarinScheduleSchema>>({
     resolver: zodResolver(WarfarinScheduleSchema),
     defaultValues: {
-      ...FormDefaultValues(data),
+      ...FormDefaultValues(data, daysOfWeekData),
     },
   });
 
   const onSubmit = async (values: z.infer<typeof WarfarinScheduleSchema>) => {
     console.log("values", values);
     const dateData = new FormData();
-    const formData = new FormData();
 
     const formattedDate = new Date(values.start_date)
       .toLocaleDateString("en-US", {
@@ -88,17 +94,23 @@ export default function WarfarinScheduleInsertForm({
 
     dateData.append("start_date", formattedDate);
 
-    // await insertWarfarinSchedule(dateData);
+    const dateId = await insertWarfarinSchedule(dateData);
+    console.log(dateId);
 
-    daysOfWeek.forEach((day) => {
+    const dosagesData = [];
+
+    daysOfWeekData.forEach((day) => {
       data.forEach((item) => {
-        const key = `${day}-${item.pill_strength}`;
-        const value = values[key];
-        formData.append(key, value);
+        dosagesData.push({
+          start_date: dateId[0].id,
+          day_of_week: day.id,
+          dose: values[`${day.id}-${item.pill_strength}`],
+          strength: item.warfarin.id,
+        });
       });
     });
 
-    await insertWarfarinDosages(formData);
+    await insertWarfarinDosages(dosagesData);
 
     form.reset();
   };
@@ -107,62 +119,65 @@ export default function WarfarinScheduleInsertForm({
     <div className="border border-slate-200 rounded-md p-9  bg-white">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="flex gap-x-5">
-            <FormField
-              control={form.control}
-              name="start_date"
-              render={({ field }) => (
-                <FormItem className="flex flex-col">
-                  <FormLabel>Start Date</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "pl-3 text-left font-normal w-full",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        disabled={(date) =>
-                          date > new Date() || date < new Date("1900-01-01")
-                        }
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormDescription>
-                    This is the date when you start your prescribed dosages.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div>
+          <div className="flex flex-wrap gap-x-5 ">
+            <div className="md:w-[300px] sm:w-full mb-8 md:mb-0">
+              <FormField
+                control={form.control}
+                name="start_date"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Start Date</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "pl-3 text-left font-normal w-full",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "PPP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) =>
+                            date > new Date() || date < new Date("1900-01-01")
+                          }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormDescription>
+                      This is the date when you start your prescribed dosages.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="flex-1">
               <p className="bg-green-200 p-5 rounded-md">
                 Below you can specify your doses for each day. The values are in
                 pill form. For example, 1.5 is equal to 1 &frac12; pills, 2
-                equals 2 pills etc.
+                equals 2 pills etc. If you are skipping a dose type 0 or leave
+                blank.
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-7 w-full gap-6 ">
-            {daysOfWeek.map((day) => (
-              <DayOfWeek key={day} day={day} data={data} form={form} />
+          <div className="grid xl:grid-cols-7 md:grid-cols-4 sm:grid-cols-1 w-full gap-6 ">
+            {daysOfWeekData.map((day) => (
+              <DayOfWeek key={day.id} day={day} data={data} form={form} />
             ))}
           </div>
           <Button
@@ -183,14 +198,14 @@ function DayOfWeek({
   data,
   form,
 }: {
-  day: string;
+  day: TdaysOfWeekData;
   data: TWarfarinScheduleForm;
   form: any;
 }) {
-  const calculateSumForDay = (day: string) => {
+  const calculateSumForDay = (day) => {
     let sum = 0;
     data.forEach((item) => {
-      const inputValue = form.watch(`${day}-${item.pill_strength}`);
+      const inputValue = form.watch(`${day.id}-${item.pill_strength}`);
       if (inputValue) {
         sum += parseFloat(inputValue) * parseFloat(item.warfarin.strength);
       }
@@ -201,22 +216,26 @@ function DayOfWeek({
     <div>
       <div className="border border-slate-200 p-4 rounded-t-md text-center">
         <p className="font-bold text-xl mb-4">
-          {day.charAt(0).toUpperCase() + day.slice(1)}
+          {day.name.charAt(0).toUpperCase() + day.name.slice(1)}
         </p>
+        <div className="grid grid-cols-2 items-baseline text-xs text-slate-400 mb-2">
+          <p>Quantity</p>
+          <p>Pill Type</p>
+        </div>
         {data.map((item) => (
-          <div key={`${day}-${item.pill_strength}`}>
+          <div key={`${day.id}-${item.pill_strength}`}>
             <FormField
               control={form.control}
-              name={`${day}-${item.pill_strength}`}
+              name={`${day.id}-${item.pill_strength}`}
               render={({ field }) => (
                 <FormItem className="grid grid-cols-2 items-baseline">
                   <FormControl>
                     <Input
-                      placeholder="#"
+                      placeholder=""
                       type="number"
                       step="0.5"
                       {...field}
-                      {...form.register(`${day}-${item.pill_strength}`)}
+                      {...form.register(`${day.id}-${item.pill_strength}`)}
                     />
                   </FormControl>
                   <FormLabel className="mt-0 pt-0">
