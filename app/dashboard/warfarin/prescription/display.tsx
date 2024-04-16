@@ -19,7 +19,7 @@ type TDisplay = {
 export default function Display({ data }: TDisplay) {
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-3">Warfarin Pills</h2>
+      <h2 className="text-2xl font-bold mb-3">Your Warfarin Pills</h2>
       <div
         className={cn(
           "w-full grid gap-4 grid-cols-1",

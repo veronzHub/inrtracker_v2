@@ -13,8 +13,12 @@ export default function Tasks({
           {warfarinPrescription.length === 0 ? (
             <li className="ml-10">
               <Link
-            href="/dashboard/warfarin/prescription"> Define your Warfarin prescription</Link>
-          ></li>
+                href="/dashboard/warfarin/prescription"
+                className="text-emerald-500 font-bold"
+              >
+                Define your Warfarin prescription
+              </Link>
+            </li>
           ) : (
             <li className="ml-10 line-through">
               Define your Warfarin prescription
@@ -22,15 +26,27 @@ export default function Tasks({
           )}
 
           {inrs.length === 0 ? (
-            <li className="ml-10"><Link
-            href="/dashboard/inr"> Log an INR</Link></li>
+            <li className="ml-10">
+              <Link
+                href="/dashboard/inr"
+                className="text-emerald-500 font-bold"
+              >
+                Log an INR
+              </Link>
+            </li>
           ) : (
-            <li className="ml-10 line-through">Log an INR</li>
+            <li className="ml-10 line-through text-slate-400">Log an INR</li>
           )}
 
           {warfarinSchedules.length === 0 ? (
-            <li className="ml-10"><Link
-            href="/dashboard/warfarin/schedule"> Input your dosage schedule</Link></li>
+            <li className="ml-10">
+              <Link
+                href="/dashboard/warfarin/schedule"
+                className="text-emerald-500 font-bold"
+              >
+                Input your dosage schedule
+              </Link>
+            </li>
           ) : (
             <li className="ml-10 line-through">Input your dosage schedule</li>
           )}
