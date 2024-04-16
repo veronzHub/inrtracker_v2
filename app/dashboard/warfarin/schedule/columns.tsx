@@ -280,8 +280,8 @@ function DisplayRows({ rowItems }) {
                   <p className="flex flex-wrap mt-2">{renderPills(item)}</p>
                   <p>
                     <span>
-                      {numberToWord(item.dose)}{" "}
-                      {item.dose <= 1 ? "pill" : "pills"} - ({item.strength}mg)
+                      {numberToWord(item.dose)} ({item.strength}mg){" "}
+                      {item.dose <= 1 ? "pill" : "pills"}
                     </span>
                   </p>
                 </>

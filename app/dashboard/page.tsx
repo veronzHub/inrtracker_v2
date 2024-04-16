@@ -111,20 +111,41 @@ export default async function Dashboard() {
                   <ul>
                     {lastWarfarinSchedule.map((item) => {
                       return (
-                        <>{item.dose > 0 && <li>{renderPills(item)}</li>}</>
+                        <>
+                          {item.dose > 0 && (
+                            <li key={item.id}>{renderPills(item)}</li>
+                          )}
+                        </>
                       );
                     })}
                     {lastWarfarinSchedule.map((item) => {
                       return (
                         <>
                           {item.dose > 0 && (
-                            <li className="text-xs text-slate-500 mb-2">
-                              {item.dose} pills - ({item.warfarin?.strength}mg)
+                            <li
+                              className="text-xs text-slate-500 mb-2"
+                              key={item.id}
+                            >
+                              {numberToWord(item.dose)} (
+                              {item.warfarin.strength}mg){" "}
+                              {item.dose <= 1 ? "pill" : "pills"}
                             </li>
                           )}
                         </>
                       );
                     })}
+                    <div className="text-xs text-slate-500 mb-2">
+                      {" "}
+                      Total Dosage:{" "}
+                      {lastWarfarinSchedule
+                        .filter((item) => item.dose > 0)
+                        .reduce(
+                          (total, item) =>
+                            total + item.dose * item.warfarin.strength,
+                          0
+                        )}{" "}
+                      mg
+                    </div>
                   </ul>
                 </div>
               ) : (
@@ -132,9 +153,7 @@ export default async function Dashboard() {
               )}
             </div>
             <div className="border border-slate-200 rounded-md p-9 text-center bg-white flex flex-col items-center justify-center h-full">
-              <p className="text-2xl font-semibold mb-4">
-                Days since your last INR test
-              </p>
+              <p className="text-2xl font-semibold mb-4">Days Since Last INR</p>
               <h2>
                 <span className="font-bold text-primary text-6xl">
                   {numberOfDaysSinceLastInr()}
