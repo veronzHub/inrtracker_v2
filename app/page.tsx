@@ -2,6 +2,9 @@ import Header from "@/components/ui/home/header";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ImDroplet } from "react-icons/im";
+import Image from "next/image";
+import { useState } from "react";
+import Features from "@/components/ui/home/features";
 
 export default async function Index() {
   return (
@@ -35,11 +38,12 @@ export default async function Index() {
           <ImDroplet className="h-96 w-96 text-col text-red-500" />
         </div>
       </section>
-      <section className="min-h-96 p-40 text-white bg-gradient-to-r from-sky-300 to-sky-700">
-        <div className="container text-center text-5xl">
-          <h2>Everything you need to manage your INR</h2>
+      <section className="pt-32  pb-8 text-white bg-gradient-to-r from-sky-700 to-sky-300">
+        <div className="container text-center ">
+          <h2 className=" text-5xl">Everything you need to manage your INR</h2>
         </div>
       </section>
+      <Features />
     </main>
   );
 }

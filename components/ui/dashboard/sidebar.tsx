@@ -145,7 +145,7 @@ export default function DashboardSidebar() {
                     "relative h-10 w-full transition-all duration-200 flex items-center rounded justify-center hover:bg-sky-100 hover:text-sky-600",
                     {
                       "bg-slate-200 text-sky-800":
-                        pathname === "/dashboard/warfarin/settings",
+                        pathname === "/dashboard/warfarin/prescription",
                     }
                   )}
                 >
