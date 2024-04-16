@@ -14,7 +14,7 @@ export default async function AuthButton() {
     <div className="flex items-center gap-4">
       <Link href="/dashboard">Go to Dashboard</Link>
       <form action={signOut}>
-        <Button size="lg" variant="default">
+        <Button className="h-10 rounded-md px-2 md:px-8" variant="default">
           Logout
         </Button>
       </form>

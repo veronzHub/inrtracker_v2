@@ -10,16 +10,16 @@ export default function Features() {
     setActiveFeature(index);
   };
   return (
-    <div className="bg-gradient-to-r from-sky-700 to-sky-300 py-20">
-      <section className="flex w-full container">
-        <div className="w-[500px] flex items-center justify-center">
+    <div className=" to-sky-300 pt-20 pb-32">
+      <section className="flex w-full flex-col md:flex-row ">
+        <div className="lg:w-[500px] w-full flex items-center justify-center">
           <ul className=" text-white text-md">
             <li
               onClick={() => toggleFeature(0)}
               className={cn(
-                " rounded-tl-md rounded-bl-md bg-opacity-30 py-7 px-14  text-slate-200",
+                " rounded-tl-md rounded-bl-md bg-opacity-30 py-7 px-14  text-slate-200 cursor-pointer",
                 {
-                  "bg-slate-700 ": activeFeature === 0,
+                  "bg-slate-700 bg-opacity-30": activeFeature === 0,
                 }
               )}
             >
@@ -29,7 +29,7 @@ export default function Features() {
             <li
               onClick={() => toggleFeature(1)}
               className={cn(
-                " rounded-tl-md rounded-bl-md bg-opacity-30 py-7 px-14  text-slate-200",
+                " rounded-tl-md rounded-bl-md bg-opacity-30 py-7 px-14  text-slate-200 cursor-pointer",
                 {
                   "bg-slate-700 ": activeFeature === 1,
                 }
@@ -41,7 +41,7 @@ export default function Features() {
             <li
               onClick={() => toggleFeature(2)}
               className={cn(
-                " rounded-tl-md rounded-bl-md bg-opacity-30 py-7 px-14  text-slate-200",
+                " rounded-tl-md rounded-bl-md bg-opacity-30 py-7 px-14  text-slate-200 cursor-pointer",
                 {
                   "bg-slate-700 ": activeFeature === 2,
                 }
@@ -53,7 +53,7 @@ export default function Features() {
             <li
               onClick={() => toggleFeature(3)}
               className={cn(
-                " rounded-tl-md rounded-bl-md bg-opacity-30 py-7 px-14  text-slate-200",
+                " rounded-tl-md rounded-bl-md bg-opacity-30 py-7 px-14  text-slate-200 cursor-pointer",
                 {
                   "bg-slate-700 ": activeFeature === 3,
                 }
@@ -61,19 +61,20 @@ export default function Features() {
             >
               <h2 className="font-bold text-xl">Accidents</h2>
               <p>
-                If you took an extra dose, or missing one entirely, you can keep
+                If you took an extra dose, or missed one entirely, you can keep
                 track of it here
               </p>
             </li>
           </ul>
         </div>
-        <div className="flex-1 relative">
+        <div className="flex-1">
           {activeFeature === 0 && (
             <Image
               src="/dashboard-ss.png"
               alt="Dashboard"
               width={1000}
               height={650}
+              className="shadow-2xl"
             />
           )}
           {activeFeature === 1 && (
@@ -82,10 +83,17 @@ export default function Features() {
               alt="Schedule"
               width={1000}
               height={650}
+              className="shadow-2xl"
             />
           )}
           {activeFeature === 2 && (
-            <Image src="/inr-ss.png" alt="INR" width={1000} height={650} />
+            <Image
+              src="/inr-ss.png"
+              alt="INR"
+              width={1000}
+              height={650}
+              className="shadow-2xl"
+            />
           )}
           {activeFeature === 3 && (
             <Image
@@ -93,6 +101,7 @@ export default function Features() {
               alt="Accidents"
               width={1000}
               height={650}
+              className="shadow-2xl"
             />
           )}
         </div>

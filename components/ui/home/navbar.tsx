@@ -8,8 +8,8 @@ export default function Navbar() {
         <li>
           <Logo />
         </li>
-        <li>Features</li>
-        <li>Resources</li>
+        {/* <li>Features</li>
+        <li>FAQ</li> */}
         <li className="ml-auto">
           <AuthButton />
         </li>
