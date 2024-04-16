@@ -105,9 +105,15 @@ export default async function Dashboard() {
               <p className="text-2xl font-semibold mb-2">
                 Today's Warfarin Dose
               </p>
+
               {warfarinSchedules.length > 0 ? (
-                <div className="mt-5">
-                  <ul>
+                <div>
+                  {lastWarfarinSchedule.every((item) => item.dose === 0) && (
+                    <span className="font-bold text-slate-500 text-6xl">
+                      skip
+                    </span>
+                  )}
+                  <ul className="mt-5">
                     {lastWarfarinSchedule.map((item) => {
                       return (
                         <>
