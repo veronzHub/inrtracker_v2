@@ -187,7 +187,7 @@ export const getWarfarinSchedules = async () => {
     console.log(error);
     throw new Error("Error fetching data");
   }
-  console.log(data);
+  // console.log(data);
   return data;
 };
 
@@ -219,6 +219,42 @@ export const insertMissedWarfarinDosage = async (formData: FormData) => {
 
   revalidatePath(`/dashboard/warfarin/accidents`);
   return { message: "success" };
+};
+
+export const getWarfarinAccidentsSinceLastInr = async () => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("inrs")
+    .select("date")
+    .order("created_at", { ascending: false })
+    .limit(1);
+
+  if (error) {
+    console.log(error);
+    throw new Error("Error fetching data");
+  }
+
+  if (data.length > 0) {
+    const {
+      data: accidentData,
+      error: accidentError,
+      status,
+      count,
+    } = await supabase
+      .from("warfarin_accidents")
+      .select("*", { count: "exact" })
+      .gte("date", data[0].date);
+
+    if (accidentError) {
+      console.log(accidentError);
+      throw new Error("Error fetching data");
+    }
+
+    console.log(count);
+    return count;
+  }
+  return;
 };
 
 export const getMissedWarfarinDosages = async () => {
@@ -270,19 +306,42 @@ export const updateMissedWarfarinDosage = async (
   return { message: "success" };
 };
 
-export const getLastTwoWarfarinSchedules = async () => {
+export const getLastWarfarinSchedule = async () => {
+  const today = new Date();
+  const currentDayOfWeek = today.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
+  const dowFix = currentDayOfWeek + 1;
+
+  // console.log("currentDayOfWeek", currentDayOfWeek);
+  // console.log("dowFix", dowFix);
+
   const supabase = createClient();
 
   const { data, error } = await supabase
     .from("warfarin_schedules")
-    .select("id, start_date")
+    .select("id")
     .order("start_date", { ascending: false })
-    .limit(2);
+    .limit(1);
 
   if (error) {
     console.log(error);
     throw new Error("Error fetching data");
   }
 
-  return data;
+  const dateId = data[0].id;
+
+  const { data: dosageData, error: dosageError } = await supabase
+    .from("warfarin_dosages")
+    .select(
+      "id, dose, warfarin(id, strength, hex), warfarin_schedules(id), days_of_week(id, name)"
+    )
+    .eq("day_of_week", dowFix)
+    .eq("start_date", dateId);
+
+  if (dosageError) {
+    console.log(dosageError);
+    throw new Error("Error fetching data");
+  }
+
+  // console.log(dosageData);
+  return dosageData;
 };

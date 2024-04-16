@@ -1,12 +1,10 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import INRInsertForm from "./insert-form";
-import InrResults from "./results";
 import { inrGet } from "@/app/actions/inr";
 import { columns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 import InrChart from "./chart";
-import Link from "next/link";
 
 export default async function Inr() {
   const supabase = createClient();
@@ -33,6 +31,7 @@ export default async function Inr() {
         <div className="flex-grow md:shrink-0">
           {data !== null && data.length > 0 ? (
             <div className="flex-grow md:shrink-0">
+              <h2 className="text-2xl font-bold mb-3">Trends</h2>
               <InrChart data={data} />
               <h2 className="text-2xl font-bold mb-3">INR History</h2>
               <DataTable columns={columns} data={data} />
