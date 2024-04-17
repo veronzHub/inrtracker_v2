@@ -56,20 +56,6 @@ export default function WarfarinPreferencesInsertForm({
     },
   });
 
-  // const filterData = warfarinData.filter(
-  //   (item) =>
-  //     !getWarfarinPreferencesData.some(
-  //       (newItem) => newItem.pill_strength === parseInt(item.strength)
-  //     )
-  // );
-
-  // const filterData = warfarinData.filter(
-  //   (item) =>
-  //     !getWarfarinPreferencesData.some(
-  //       (newItem) => newItem.pill_strength === item.strength
-  //     )
-  // );
-
   console.log("warfarinData", warfarinData);
 
   console.log("getWarfarinPreferencesData", getWarfarinPreferencesData);
