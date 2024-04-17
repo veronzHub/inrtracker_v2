@@ -52,8 +52,7 @@ export const getWarfarin = async () => {
   }
 
   const filterData = data.filter(
-    (item) =>
-      !userdata.some((newItem) => newItem.pill_strength === parseInt(item.id))
+    (item) => !userdata.some((newItem) => newItem.pill_strength === item.id)
   );
 
   return filterData;
