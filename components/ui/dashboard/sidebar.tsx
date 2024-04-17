@@ -33,7 +33,7 @@ export default function DashboardSidebar() {
             <Link
               href="/"
               className={cn(
-                "relative h-10 w-full transition-all duration-200 flex items-center rounded justify-center hover:bg-sky-100 hover:text-sky-600"
+                "relative h-10 w-full transition-all duration-200 flex items-center rounded justify-center "
               )}
             >
               <span className="absolute text-2xl left-0 top-0 flex rounded h-10 w-10 items-center justify-center">
