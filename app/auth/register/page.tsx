@@ -56,12 +56,18 @@ export default function Register({
             Password
           </label>
           <input
-            className="rounded-md px-4 py-2 bg-inherit border mb-6"
+            className="rounded-md px-4 py-2 bg-inherit border mb-3"
             type="password"
             name="password"
             placeholder="••••••••"
             required
           />
+          <p className="text-xs text-slate-400 mb-6">
+            By clicking "Sign Up", or continuing with Google, Facebook, or
+            Apple, you agree to INRTracker's{" "}
+            <Link href="/terms">Terms of Service</Link> and{" "}
+            <Link href="/privacy">Privacy Policy</Link>.
+          </p>
           <SubmitButton
             formAction={signUp}
             className="bg-primary text-primary-foreground shadow hover:bg-primary/90 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-10 px-8"
