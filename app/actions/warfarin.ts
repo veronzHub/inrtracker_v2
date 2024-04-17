@@ -6,8 +6,9 @@ import { WarfarinPreferencesSchema } from "../dashboard/warfarin/prescription/fo
 import { idText } from "typescript";
 
 export type FormState = {
-  message: string;
-  errorMessage: string;
+  message?: string;
+  errorMessage?: string;
+  error?: string;
 };
 
 export const getDaysOfWeek = async () => {
