@@ -158,6 +158,33 @@ export const insertWarfarinSchedule = async (formData: FormData) => {
   return data;
 };
 
+export const deleteWarfarinScheduleAndDosages = async (id: number) => {
+  const supabase = createClient();
+
+  const { error: dosageError } = await supabase
+    .from("warfarin_dosages")
+    .delete()
+    .eq("start_date", id);
+
+  if (dosageError) {
+    console.log(dosageError);
+    return dosageError;
+  }
+
+  const { error } = await supabase
+    .from("warfarin_schedules")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.log(error);
+    return error;
+  }
+
+  revalidatePath(`/dashboard/warfarin/schedule`);
+  return { message: "success" };
+};
+
 export const insertWarfarinDosages = async (dosagesData) => {
   const supabase = createClient();
 

@@ -24,7 +24,7 @@ export const columns: ColumnDef<TCols>[] = [
     cell: ({ row }) => {
       const thisone = row.original;
 
-      return <DeleteForm thisone={thisone} />;
+      return <DeleteForm id={thisone.id} startDate={thisone.start_date} />;
     },
   },
   {
