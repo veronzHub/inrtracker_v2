@@ -30,7 +30,8 @@ import { Button } from "@/components/ui/button";
 
 import { Input } from "@/components/ui/input";
 
-import { WarfarinScheduleInsertSchema2 } from "@/app/dashboard/warfarin/schedule/formSchema";
+import { WarfarinScheduleInsertSchema } from "@/app/dashboard/warfarin/schedule/formSchema";
+import { TinsertWarfarinDosages } from "@/types/warfarin";
 
 const FormDefaultValues = (data: TWarfarinScheduleForm, daysOfWeekData) => {
   const defaultValues = {};
@@ -68,7 +69,7 @@ export default function WarfarinScheduleInsertForm({
   data: TWarfarinScheduleForm;
   daysOfWeekData: TdaysOfWeekData;
 }) {
-  const WarfarinScheduleSchema = WarfarinScheduleInsertSchema2(
+  const WarfarinScheduleSchema = WarfarinScheduleInsertSchema(
     data,
     daysOfWeekData
   );
@@ -97,7 +98,7 @@ export default function WarfarinScheduleInsertForm({
     const dateId = await insertWarfarinSchedule(dateData);
     console.log(dateId);
 
-    const dosagesData = [];
+    const dosagesData: TinsertWarfarinDosages = [];
 
     daysOfWeekData.forEach((day) => {
       data.forEach((item) => {

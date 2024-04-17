@@ -1,6 +1,6 @@
 "use client";
-
-import { GeistSans } from "geist/font/sans";
+import React, { useState, useEffect } from "react";
+import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,10 +10,9 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartType,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
 import annotationPlugin from "chartjs-plugin-annotation";
-import { useState, useEffect } from "react";
 import Spinner from "@/components/ui/spinner";
 
 ChartJS.register(
@@ -36,6 +35,25 @@ type TInrChart = {
   }[];
 };
 
+declare module "chart.js" {
+  interface PluginOptionsByType<TType extends ChartType> {
+    annotation?: {
+      annotations?: Record<string, AnnotationItem>;
+    };
+  }
+
+  interface AnnotationItem {
+    type?: string;
+    xMin?: number;
+    xMax?: number;
+    yMin?: number;
+    yMax?: number;
+    backgroundColor?: string;
+    borderColor?: string;
+    drawTime?: string;
+  }
+}
+
 export default function InrChart({ data }: TInrChart) {
   const [loading, setLoading] = useState(true);
 
@@ -51,9 +69,8 @@ export default function InrChart({ data }: TInrChart) {
 
   const limitedData = data.slice(0, 8);
 
-  console.log(data);
-
   const formData = {
+    type: "line",
     labels: limitedData.map((item) => item.date).reverse(),
     datasets: [
       {
@@ -106,13 +123,7 @@ export default function InrChart({ data }: TInrChart) {
 
   return (
     <div className="flex justify-center items-center mb-10 border border-slate-200 rounded-md p-10  bg-white h-96 w-full">
-      {loading ? (
-        <div>
-          <Spinner />
-        </div>
-      ) : (
-        <Line options={options} data={formData} />
-      )}
+      {loading ? <Spinner /> : <Line data={formData} options={options} />}
     </div>
   );
 }

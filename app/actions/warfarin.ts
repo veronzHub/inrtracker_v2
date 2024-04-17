@@ -1,14 +1,16 @@
 "use server";
 
+import { PostgrestError } from "@supabase/supabase-js";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { WarfarinPreferencesSchema } from "../dashboard/warfarin/prescription/formSchema";
 import { idText } from "typescript";
+import { TinsertWarfarinDosages } from "@/types/warfarin";
 
 export type FormState = {
   message?: string;
   errorMessage?: string;
-  error?: string;
+  error?: string | PostgrestError;
 };
 
 export const getDaysOfWeek = async () => {
@@ -87,35 +89,38 @@ export const insertWarfarinPreferences = async (
   }
   const pill_strength = formData.get("pill_strength") as number | null;
 
-  const supabase = createClient();
+  if (pill_strength !== null) {
+    const supabase = createClient();
 
-  const { data: existingRecords, error: queryError } = await supabase
-    .from("warfarin_preferences")
-    .select("*")
-    .eq("pill_strength", pill_strength);
+    const { data: existingRecords, error: queryError } = await supabase
+      .from("warfarin_preferences")
+      .select("*")
+      .eq("pill_strength", pill_strength);
 
-  if (queryError) {
-    return {
-      errorMessage: "Error occurred while checking existing records.",
-      error: queryError,
-    };
+    if (queryError) {
+      return {
+        errorMessage: "Error occurred while checking existing records.",
+        error: queryError,
+      };
+    }
+    if (existingRecords && existingRecords.length > 0) {
+      return {
+        errorMessage: "A record with the same pill strength already exists.",
+      };
+    }
+
+    const { error } = await supabase
+      .from("warfarin_preferences")
+      .insert({ pill_strength });
+
+    if (error) {
+      return error;
+    }
+    revalidatePath(`/dashboard/warfarin/settings`);
+    return { message: "success" };
   }
 
-  if (existingRecords && existingRecords.length > 0) {
-    return {
-      errorMessage: "A record with the same pill strength already exists.",
-    };
-  }
-
-  const { error } = await supabase
-    .from("warfarin_preferences")
-    .insert({ pill_strength });
-
-  if (error) {
-    return error;
-  }
-  revalidatePath(`/dashboard/warfarin/settings`);
-  return { message: "success" };
+  return { message: "invalid form data" };
 };
 
 export const deleteWarfarinPreferences = async (id: number) => {
@@ -185,8 +190,13 @@ export const deleteWarfarinScheduleAndDosages = async (id: number) => {
   return { message: "success" };
 };
 
-export const insertWarfarinDosages = async (dosagesData) => {
+export const insertWarfarinDosages = async (
+  dosagesData: TinsertWarfarinDosages
+) => {
   const supabase = createClient();
+
+  console.log("dosagesData");
+  console.log(dosagesData);
 
   const { data, error } = await supabase
     .from("warfarin_dosages")
