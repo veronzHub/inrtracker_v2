@@ -68,50 +68,49 @@ export default function Features() {
           </ul>
         </div>
         <div className="flex-1">
-          {activeFeature === 0 && (
-            <Image
-              src="/dashboard-ss.png"
-              alt="Dashboard"
-              width={1000}
-              height={650}
-              className="shadow-2xl"
-              priority={true}
-              placeholder="blur"
-            />
-          )}
-          {activeFeature === 1 && (
-            <Image
-              src="/schedule-ss.png"
-              alt="Schedule"
-              width={1000}
-              height={650}
-              className="shadow-2xl"
-              priority={true}
-              placeholder="blur"
-            />
-          )}
-          {activeFeature === 2 && (
-            <Image
-              src="/inr-ss.png"
-              alt="INR"
-              width={1000}
-              height={650}
-              className="shadow-2xl"
-              priority={true}
-              placeholder="blur"
-            />
-          )}
-          {activeFeature === 3 && (
-            <Image
-              src="/accidents-ss.png"
-              alt="Accidents"
-              width={1000}
-              height={650}
-              className="shadow-2xl"
-              priority={true}
-              placeholder="blur"
-            />
-          )}
+          <Image
+            src="/dashboard-ss.png"
+            alt="Dashboard"
+            width={1000}
+            height={650}
+            className={cn("shadow-2xl hidden", {
+              block: activeFeature === 0,
+            })}
+            priority={true}
+          />
+
+          <Image
+            src="/schedule-ss.png"
+            alt="Schedule"
+            width={1000}
+            height={650}
+            className={cn("shadow-2xl hidden", {
+              block: activeFeature === 1,
+            })}
+            priority={true}
+          />
+
+          <Image
+            src="/inr-ss.png"
+            alt="INR"
+            width={1000}
+            height={650}
+            className={cn("shadow-2xl hidden", {
+              block: activeFeature === 2,
+            })}
+            priority={true}
+          />
+
+          <Image
+            src="/accidents-ss.png"
+            alt="Accidents"
+            width={1000}
+            height={650}
+            className={cn("shadow-2xl hidden", {
+              block: activeFeature === 3,
+            })}
+            priority={true}
+          />
         </div>
       </section>
     </div>
