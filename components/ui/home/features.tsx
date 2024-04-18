@@ -76,6 +76,7 @@ export default function Features() {
               height={650}
               className="shadow-2xl"
               priority={true}
+              placeholder="blur"
             />
           )}
           {activeFeature === 1 && (
@@ -86,6 +87,7 @@ export default function Features() {
               height={650}
               className="shadow-2xl"
               priority={true}
+              placeholder="blur"
             />
           )}
           {activeFeature === 2 && (
@@ -96,6 +98,7 @@ export default function Features() {
               height={650}
               className="shadow-2xl"
               priority={true}
+              placeholder="blur"
             />
           )}
           {activeFeature === 3 && (
@@ -106,6 +109,7 @@ export default function Features() {
               height={650}
               className="shadow-2xl"
               priority={true}
+              placeholder="blur"
             />
           )}
         </div>
