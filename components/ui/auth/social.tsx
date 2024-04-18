@@ -3,7 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { FaApple } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
-import { handleSignInWithGoogle } from "@/app/actions/auth";
+import { signInWithGoogle } from "@/app/actions/auth";
 
 export default function Social() {
   return (
@@ -11,14 +11,11 @@ export default function Social() {
       {/* <Button size="lg" className="w-full" variant="outline" onClick={() => {}}>
         <FaFacebook className="h-5 w-5 mr-2" /> Continue with Facebook
       </Button> */}
-      {/* <Button
-        size="lg"
-        className="w-full"
-        variant="outline"
-        onClick={handleSignInWithGoogle}
-      >
-        <FcGoogle className="h-5 w-5 mr-2" /> Continue with Google
-      </Button> */}
+      <form action={signInWithGoogle} className="w-full">
+        <Button size="lg" className="w-full" variant="outline">
+          <FcGoogle className="h-5 w-5 mr-2" /> Continue with Google
+        </Button>
+      </form>
       {/* <Button size="lg" className="w-full" variant="outline" onClick={() => {}}>
         <FaApple className="h-5 w-5 mr-2" /> Continue with Apple
       </Button> */}
