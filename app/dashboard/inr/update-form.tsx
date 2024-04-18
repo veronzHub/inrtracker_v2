@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,6 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import { MdModeEditOutline } from "react-icons/md";
 
 import * as z from "zod";

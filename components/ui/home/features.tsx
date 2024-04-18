@@ -6,7 +6,7 @@ import React, { useState } from "react";
 export default function Features() {
   const [activeFeature, setActiveFeature] = useState(0);
 
-  const toggleFeature = (index) => {
+  const toggleFeature = (index: number) => {
     setActiveFeature(index);
   };
   return (

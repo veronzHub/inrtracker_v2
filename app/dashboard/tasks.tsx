@@ -4,13 +4,17 @@ export default function Tasks({
   inrs,
   warfarinPrescription,
   warfarinSchedules,
+}: {
+  inrs: number;
+  warfarinPrescription: number;
+  warfarinSchedules: number;
 }) {
   return (
     <div className="col-span-2 border border-slate-200 rounded-md p-10  bg-white  h-full">
       <h2 className=" text-primary text-2xl font-bold mb-3">Your Tasks</h2>
       <ul className="list-[number]">
         <>
-          {warfarinPrescription.length === 0 ? (
+          {warfarinPrescription === 0 ? (
             <li className="ml-10">
               <Link
                 href="/dashboard/warfarin/prescription"
@@ -25,7 +29,7 @@ export default function Tasks({
             </li>
           )}
 
-          {inrs.length === 0 ? (
+          {inrs === 0 ? (
             <li className="ml-10">
               <Link
                 href="/dashboard/inr"
@@ -38,7 +42,7 @@ export default function Tasks({
             <li className="ml-10 line-through text-slate-400">Log an INR</li>
           )}
 
-          {warfarinSchedules.length === 0 ? (
+          {warfarinSchedules === 0 ? (
             <li className="ml-10">
               <Link
                 href="/dashboard/warfarin/schedule"

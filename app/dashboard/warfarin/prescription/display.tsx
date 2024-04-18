@@ -13,7 +13,7 @@ type TDisplay = {
       unit: string | null;
       color: string | null;
       hex: string | null;
-    };
+    } | null;
   }[];
 };
 export default function Display({ data }: TDisplay) {
@@ -37,17 +37,17 @@ export default function Display({ data }: TDisplay) {
                   <span className="absolute right-4 top-4">
                     <DeleteForm
                       id={data.id}
-                      pill_strength={data.warfarin.strength}
-                      unit={data.warfarin.unit}
+                      pill_strength={data.warfarin && data.warfarin.strength}
+                      unit={data.warfarin && data.warfarin.unit}
                     />
                   </span>
                   <LuPill
                     className={`w-40 h-40`}
-                    style={{ color: `#${data.warfarin.hex}` }}
+                    style={{ color: `#${data.warfarin && data.warfarin.hex}` }}
                   />
                   <span className="text-white text-6xl">
-                    {data.warfarin.strength}
-                    {data.warfarin.unit}
+                    {data.warfarin && data.warfarin.strength}
+                    {data.warfarin && data.warfarin.unit}
                   </span>
                 </div>
               </div>

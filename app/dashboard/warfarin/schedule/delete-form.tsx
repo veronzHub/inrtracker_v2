@@ -15,7 +15,13 @@ import {
 } from "@/components/ui/alert-dialog";
 import { AiFillDelete } from "react-icons/ai";
 
-export default function DeleteForm({ id, startDate }) {
+export default function DeleteForm({
+  id,
+  startDate,
+}: {
+  id: number;
+  startDate: string;
+}) {
   return (
     <>
       <AlertDialog>

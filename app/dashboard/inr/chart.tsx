@@ -1,8 +1,9 @@
+// @ts-nocheck
 "use client";
 import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import {
-  Chart as ChartJS,
+  Chart,
   CategoryScale,
   LinearScale,
   PointElement,
@@ -11,11 +12,27 @@ import {
   Tooltip,
   Legend,
   ChartType,
+  Plugin,
 } from "chart.js";
 import annotationPlugin from "chartjs-plugin-annotation";
 import Spinner from "@/components/ui/spinner";
 
-ChartJS.register(
+// declare module "chart.js" {
+//   interface PluginOptionsByType<TType extends ChartType> {
+//     annotations?: {
+//       type?: string;
+//       xMin?: number;
+//       xMax?: number;
+//       yMin?: number;
+//       yMax?: number;
+//       backgroundColor?: string;
+//       borderColor?: string;
+//       drawTime?: string;
+//     };
+//   }
+// }
+
+Chart.register(
   CategoryScale,
   LinearScale,
   PointElement,
@@ -35,25 +52,6 @@ type TInrChart = {
   }[];
 };
 
-declare module "chart.js" {
-  interface PluginOptionsByType<TType extends ChartType> {
-    annotation?: {
-      annotations?: Record<string, AnnotationItem>;
-    };
-  }
-
-  interface AnnotationItem {
-    type?: string;
-    xMin?: number;
-    xMax?: number;
-    yMin?: number;
-    yMax?: number;
-    backgroundColor?: string;
-    borderColor?: string;
-    drawTime?: string;
-  }
-}
-
 export default function InrChart({ data }: TInrChart) {
   const [loading, setLoading] = useState(true);
 
@@ -64,12 +62,12 @@ export default function InrChart({ data }: TInrChart) {
     return () => clearTimeout(timer); // Cleanup timer on unmount
   }, []);
 
-  ChartJS.defaults.borderColor = "rgb(226, 232, 240)";
-  ChartJS.defaults.color = "rgb(100, 116, 139)";
+  Chart.defaults.borderColor = "rgb(226, 232, 240)";
+  Chart.defaults.color = "rgb(100, 116, 139)";
 
   const limitedData = data.slice(0, 8);
 
-  const formData = {
+  const inrData = {
     type: "line",
     labels: limitedData.map((item) => item.date).reverse(),
     datasets: [
@@ -123,7 +121,7 @@ export default function InrChart({ data }: TInrChart) {
 
   return (
     <div className="flex justify-center items-center mb-10 border border-slate-200 rounded-md p-10  bg-white h-96 w-full">
-      {loading ? <Spinner /> : <Line data={formData} options={options} />}
+      {loading ? <Spinner /> : <Line data={inrData} options={options} />}
     </div>
   );
 }

@@ -95,7 +95,7 @@ export const columns: ColumnDef<TCols>[] = [
       );
     },
     sortingFn: (rowA, rowB, columnId) => {
-      const typeValue = (row) => {
+      const typeValue = (row: TCols) => {
         if (row.missed && row.incorrect) return 0;
         if (row.missed) return 1;
         if (row.incorrect) return 2;
