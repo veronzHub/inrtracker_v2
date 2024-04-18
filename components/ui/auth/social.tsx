@@ -11,14 +11,14 @@ export default function Social() {
       {/* <Button size="lg" className="w-full" variant="outline" onClick={() => {}}>
         <FaFacebook className="h-5 w-5 mr-2" /> Continue with Facebook
       </Button> */}
-      <Button
+      {/* <Button
         size="lg"
         className="w-full"
         variant="outline"
         onClick={handleSignInWithGoogle}
       >
         <FcGoogle className="h-5 w-5 mr-2" /> Continue with Google
-      </Button>
+      </Button> */}
       {/* <Button size="lg" className="w-full" variant="outline" onClick={() => {}}>
         <FaApple className="h-5 w-5 mr-2" /> Continue with Apple
       </Button> */}
