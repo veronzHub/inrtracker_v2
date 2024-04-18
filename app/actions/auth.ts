@@ -4,6 +4,18 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 
+export const handleSignInWithGoogle = async () => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+  });
+
+  if (error) {
+    console.log(error);
+  }
+};
+
 export const signIn = async (formData: FormData) => {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
