@@ -1,6 +1,5 @@
 import { getMissedWarfarinDosages } from "@/app/actions/warfarin";
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
+
 import { columns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 import InsertAccidentForm from "./insert-form";
@@ -8,16 +7,6 @@ import H1 from "@/components/ui/dashboard/h1";
 import H2 from "@/components/ui/dashboard/h2";
 
 export default async function WarfarinAccidents() {
-  const supabase = createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return redirect("/auth/login");
-  }
-
   const missedWarfarinDosages = await getMissedWarfarinDosages();
 
   return (

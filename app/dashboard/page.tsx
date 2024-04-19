@@ -1,5 +1,3 @@
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
 import { inrGet } from "../actions/inr";
 import InrChart from "./inr/chart";
 import {
@@ -14,16 +12,6 @@ import { HalfPill, FullPill } from "./pills";
 import { numberToWord } from "@/lib/utils";
 
 export default async function Dashboard() {
-  const supabase = createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return redirect("/auth/login");
-  }
-
   const inrs = await inrGet();
 
   const warfarinPrescription = await getWarfarinPreferences();

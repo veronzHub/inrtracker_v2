@@ -1,11 +1,23 @@
 import DashboardHeader from "@/components/ui/dashboard/header";
 import DashboardSidebar from "@/components/ui/dashboard/sidebar";
+import { createClient } from "@/utils/supabase/server";
 
-export default function DashboardLayout({
+import { redirect } from "next/navigation";
+
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const supabase = createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return redirect("/auth/login");
+  }
   return (
     <main className="flex min-h-screen">
       <DashboardSidebar />

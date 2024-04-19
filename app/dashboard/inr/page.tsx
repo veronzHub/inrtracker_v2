@@ -1,5 +1,3 @@
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
 import INRInsertForm from "./insert-form";
 import { inrGet } from "@/app/actions/inr";
 import { columns } from "./columns";
@@ -9,15 +7,6 @@ import H1 from "@/components/ui/dashboard/h1";
 import H2 from "@/components/ui/dashboard/h2";
 
 export default async function Inr() {
-  const supabase = createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return redirect("/auth/login");
-  }
   const data = await inrGet();
 
   return (

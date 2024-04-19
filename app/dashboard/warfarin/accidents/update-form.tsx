@@ -64,7 +64,7 @@ export default function UpdateForm({
     resolver: zodResolver(WarfarinAccidentSchema),
     defaultValues: {
       date: new Date(date?.replace(/-/g, "/")),
-      type: missed,
+      type: missed ? "missed" : "incorrect",
       note: note,
     },
   });

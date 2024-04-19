@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   },
   description: "Keep track of your INR's, vitamin K, weight and more.",
 };
+
 export default function RootLayout({
   children,
 }: {

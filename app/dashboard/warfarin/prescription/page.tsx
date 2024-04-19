@@ -1,22 +1,11 @@
 import { getWarfarin, getWarfarinPreferences } from "@/app/actions/warfarin";
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
+
 import WarfarinPreferencesInsertForm from "./insert-form";
 import Display from "./display";
 import H1 from "@/components/ui/dashboard/h1";
 import H2 from "@/components/ui/dashboard/h2";
 
 export default async function WarfarinSettings() {
-  const supabase = createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return redirect("/auth/login");
-  }
-
   const data = await getWarfarinPreferences();
   const warfarinData = await getWarfarin();
   return (

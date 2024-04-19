@@ -3,8 +3,7 @@ import {
   getWarfarinDosages,
   getWarfarinPreferences,
 } from "@/app/actions/warfarin";
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
+
 import WarfarinScheduleInsertForm from "./insert-form";
 import { columns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
@@ -13,16 +12,6 @@ import H1 from "@/components/ui/dashboard/h1";
 import H2 from "@/components/ui/dashboard/h2";
 
 export default async function WarfarinSchedule() {
-  const supabase = createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return redirect("/auth/login");
-  }
-
   const data = await getWarfarinPreferences();
 
   const daysOfWeekData = await getDaysOfWeek();
