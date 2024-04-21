@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use server";
 
 import { PostgrestError } from "@supabase/supabase-js";
@@ -6,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import { WarfarinPreferencesSchema } from "../dashboard/warfarin/prescription/formSchema";
 import { idText } from "typescript";
 import { TinsertWarfarinDosages } from "@/types/warfarin";
+import { WarfarinAccidentSchema } from "../dashboard/warfarin/accidents/formSchema";
 
 export type FormState = {
   message?: string;
@@ -195,9 +197,6 @@ export const insertWarfarinDosages = async (
 ) => {
   const supabase = createClient();
 
-  console.log("dosagesData");
-  console.log(dosagesData);
-
   const { data, error } = await supabase
     .from("warfarin_dosages")
     .insert(dosagesData);
@@ -243,21 +242,6 @@ export const getWarfarinDosages = async () => {
   return data;
 };
 
-export const insertMissedWarfarinDosage = async (formData: FormData) => {
-  const data = Object.fromEntries(formData);
-  const supabase = createClient();
-
-  const { error } = await supabase.from("warfarin_accidents").insert(data);
-
-  if (error) {
-    console.log(error);
-    return error;
-  }
-
-  revalidatePath(`/dashboard/warfarin/accidents`);
-  return { message: "success" };
-};
-
 export const getWarfarinAccidentsSinceLastInr = async () => {
   const supabase = createClient();
 
@@ -294,7 +278,42 @@ export const getWarfarinAccidentsSinceLastInr = async () => {
   return;
 };
 
-export const getMissedWarfarinDosages = async () => {
+export const insertWarfarinAccidents = async (formData: FormData) => {
+  const data = Object.fromEntries(formData);
+  const supabase = createClient();
+
+  const parsed = WarfarinAccidentSchema.safeParse({
+    date: formData.get("date") as string,
+    type: formData.get("type") as string,
+    note: formData.get("date") as string,
+  });
+
+  if (!parsed.success) {
+    console.log(parsed.error);
+    return {
+      message: "invalid form data",
+    };
+  }
+
+  const date = formData.get("date") as string;
+  const missed = formData.get("missed");
+  const incorrect = formData.get("incorrect");
+  const note = formData.get("note") as string;
+
+  const { error } = await supabase
+    .from("warfarin_accidents")
+    .insert({ date, missed, incorrect, note });
+
+  if (error) {
+    console.log(error);
+    return error;
+  }
+
+  revalidatePath(`/dashboard/warfarin/accidents`);
+  return { message: "success" };
+};
+
+export const getWarfarinAccidents = async () => {
   const supabase = createClient();
 
   const { data, error } = await supabase.from("warfarin_accidents").select();
@@ -307,7 +326,7 @@ export const getMissedWarfarinDosages = async () => {
   return data;
 };
 
-export const deleteMissedWarfarinDosage = async (id: number) => {
+export const deleteWarfarinAccidents = async (id: number) => {
   const supabase = createClient();
   const { error } = await supabase
     .from("warfarin_accidents")
@@ -322,7 +341,7 @@ export const deleteMissedWarfarinDosage = async (id: number) => {
   return revalidatePath(`/dashboard/warfarin/accidents`);
 };
 
-export const updateMissedWarfarinDosage = async (
+export const updateWarfarinAccidents = async (
   formData: FormData,
   id: number
 ) => {

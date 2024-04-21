@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -11,7 +10,6 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import { MdModeEditOutline } from "react-icons/md";
 
 import * as z from "zod";
@@ -39,17 +37,10 @@ import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { WarfarinAccidentSchema } from "./formSchema";
 import { useState } from "react";
-import { updateMissedWarfarinDosage } from "@/app/actions/warfarin";
+import { updateWarfarinAccidents } from "@/app/actions/warfarin";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
-type TUpdateInrForm = {
-  id: number;
-  note: string | null;
-  date: string | null;
-  missed: boolean;
-  incorrect: boolean;
-};
+import { TWarfarinAccidentForm } from "@/types/warfarin";
 
 export default function UpdateForm({
   id,
@@ -57,15 +48,15 @@ export default function UpdateForm({
   date,
   missed,
   incorrect,
-}: TUpdateInrForm) {
+}: TWarfarinAccidentForm) {
   const [open, setOpen] = useState(false);
 
   const form = useForm<z.infer<typeof WarfarinAccidentSchema>>({
     resolver: zodResolver(WarfarinAccidentSchema),
     defaultValues: {
-      date: new Date(date?.replace(/-/g, "/")),
+      date: new Date(date.replace(/-/g, "/")),
       type: missed ? "missed" : "incorrect",
-      note: note,
+      note: note || "",
     },
   });
 
@@ -88,7 +79,7 @@ export default function UpdateForm({
       values.type === "incorrect" ? "true" : "false"
     );
 
-    await updateMissedWarfarinDosage(formData, id);
+    await updateWarfarinAccidents(formData, id);
 
     setOpen(false);
   };

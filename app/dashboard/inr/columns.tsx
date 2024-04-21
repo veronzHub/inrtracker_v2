@@ -4,15 +4,9 @@ import { Button } from "@/components/ui/button";
 import { HiMiniChevronUpDown } from "react-icons/hi2";
 import DeleteForm from "./delete-form";
 import UpdateInrForm from "./update-form";
+import { TInrForm } from "@/types/inr";
 
-type TCols = {
-  id: number;
-  note: string | null;
-  date: string;
-  inr: number;
-};
-
-export const columns: ColumnDef<TCols>[] = [
+export const columns: ColumnDef<TInrForm>[] = [
   {
     accessorKey: "delete",
     header: "",

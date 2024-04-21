@@ -1,4 +1,4 @@
-import { getMissedWarfarinDosages } from "@/app/actions/warfarin";
+import { getWarfarinAccidents } from "@/app/actions/warfarin";
 
 import { columns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
@@ -7,7 +7,7 @@ import H1 from "@/components/ui/dashboard/h1";
 import H2 from "@/components/ui/dashboard/h2";
 
 export default async function WarfarinAccidents() {
-  const missedWarfarinDosages = await getMissedWarfarinDosages();
+  const warfarinAccidents = await getWarfarinAccidents();
 
   return (
     <div>
@@ -20,10 +20,10 @@ export default async function WarfarinAccidents() {
           <InsertAccidentForm />
         </div>
 
-        {missedWarfarinDosages !== null && missedWarfarinDosages.length > 0 ? (
+        {warfarinAccidents !== null && warfarinAccidents.length > 0 ? (
           <div className="flex-grow">
             <H2>Accident History</H2>
-            <DataTable columns={columns} data={missedWarfarinDosages} />
+            <DataTable columns={columns} data={warfarinAccidents} />
           </div>
         ) : (
           <div className="flex text-center items-center justify-center flex-1">

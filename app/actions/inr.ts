@@ -37,7 +37,7 @@ export const inrPut = async (formData: FormData, id: number) => {
   const data = Object.fromEntries(formData);
   const parsed = InrSchema.safeParse({
     date: formData.get("date") as string,
-    inr: formData.get("inr") as number | null,
+    inr: Number(formData.get("inr")) as number,
     note: formData.get("note") as string,
   });
 
@@ -50,7 +50,7 @@ export const inrPut = async (formData: FormData, id: number) => {
     };
   }
   const date = formData.get("date") as string;
-  const inr = formData.get("inr") as number | null;
+  const inr = Number(formData.get("inr")) as number;
   const note = formData.get("note") as string;
 
   const supabase = createClient();
@@ -72,9 +72,9 @@ export const inrInsert = async (formData: FormData): Promise<FormState> => {
   console.log(formData);
   const data = Object.fromEntries(formData);
   const parsed = InrSchema.safeParse({
-    date: formData.get("date") as string,
-    inr: formData.get("inr") as number | null,
-    note: formData.get("note") as string,
+    date: formData.get("date"),
+    inr: formData.get("inr"),
+    note: formData.get("note"),
   });
 
   if (!parsed.success) {
@@ -85,7 +85,7 @@ export const inrInsert = async (formData: FormData): Promise<FormState> => {
   }
 
   const date = formData.get("date") as string;
-  const inr = formData.get("inr") as number | null;
+  const inr = Number(formData.get("inr")) as number;
   const note = formData.get("note") as string;
 
   const supabase = createClient();

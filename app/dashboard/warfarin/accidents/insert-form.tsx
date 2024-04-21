@@ -25,7 +25,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { insertMissedWarfarinDosage } from "@/app/actions/warfarin";
+import { insertWarfarinAccidents } from "@/app/actions/warfarin";
 import { WarfarinAccidentSchema } from "./formSchema";
 
 export default function InsertAccidentForm() {
@@ -37,7 +37,6 @@ export default function InsertAccidentForm() {
   });
 
   const onSubmit = async (values: z.infer<typeof WarfarinAccidentSchema>) => {
-    console.log(values);
     const formData = new FormData();
 
     const formattedDate = new Date(values.date)
@@ -48,19 +47,16 @@ export default function InsertAccidentForm() {
       })
       .replace(/\//g, "-");
 
-    if (values.type === "missed") {
-      formData.append("missed", "true");
-      formData.append("incorrect", "false");
-    }
-    if (values.type === "incorrect") {
-      formData.append("missed", "false");
-      formData.append("incorrect", "true");
-    }
-
     formData.append("date", formattedDate);
     formData.append("note", String(values.note));
+    formData.append("type", values.type);
+    formData.append("missed", values.type === "missed" ? "true" : "false");
+    formData.append(
+      "incorrect",
+      values.type === "incorrect" ? "true" : "false"
+    );
 
-    await insertMissedWarfarinDosage(formData);
+    await insertWarfarinAccidents(formData);
 
     form.reset();
   };

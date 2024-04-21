@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteMissedWarfarinDosage } from "@/app/actions/warfarin";
+import { deleteWarfarinAccidents } from "@/app/actions/warfarin";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,15 +12,16 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { TWarfarinAccidentForm } from "@/types/warfarin";
 import { AiFillDelete } from "react-icons/ai";
 
-type TDeleteForm = {
-  id: number;
-  note: string | null;
-  date: string | null;
-};
-
-export default function DeleteForm({ id, note, date }: TDeleteForm) {
+export default function DeleteForm({
+  id,
+  note,
+  date,
+  missed,
+  incorrect,
+}: TWarfarinAccidentForm) {
   return (
     <>
       <AlertDialog>
@@ -34,13 +35,18 @@ export default function DeleteForm({ id, note, date }: TDeleteForm) {
               <p className="mb-3">Deleting this entry cannot be undone.</p>
               <p>
                 <b>Date:</b>{" "}
-                {new Date(
-                  date?.replace(/-/g, "/") as string
-                ).toLocaleDateString("en-US", {
-                  month: "2-digit",
-                  day: "2-digit",
-                  year: "numeric",
-                })}
+                {new Date(date.replace(/-/g, "/") as string).toLocaleDateString(
+                  "en-US",
+                  {
+                    month: "2-digit",
+                    day: "2-digit",
+                    year: "numeric",
+                  }
+                )}
+              </p>
+              <p>
+                <b>Type: </b> {missed && "Missed"}
+                {incorrect && "Incorrect"}
               </p>
               <p>
                 <b>Note:</b> {note}
@@ -51,7 +57,7 @@ export default function DeleteForm({ id, note, date }: TDeleteForm) {
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
               className="bg-red-500 hover:bg-red-700"
-              onClick={async () => await deleteMissedWarfarinDosage(id)}
+              onClick={async () => await deleteWarfarinAccidents(id)}
             >
               Yes, Delete
             </AlertDialogAction>

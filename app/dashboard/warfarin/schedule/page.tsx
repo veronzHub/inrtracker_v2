@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
   getDaysOfWeek,
   getWarfarinDosages,

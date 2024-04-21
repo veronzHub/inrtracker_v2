@@ -4,16 +4,9 @@ import { Button } from "@/components/ui/button";
 import { HiMiniChevronUpDown } from "react-icons/hi2";
 import DeleteForm from "./delete-form";
 import UpdateForm from "./update-form";
+import { TWarfarinAccidentForm } from "@/types/warfarin";
 
-type TCols = {
-  id: number;
-  missed: boolean;
-  incorrect: boolean;
-  date: string | null;
-  note: string | null;
-};
-
-export const columns: ColumnDef<TCols>[] = [
+export const columns: ColumnDef<TWarfarinAccidentForm>[] = [
   {
     accessorKey: "delete",
     header: "",
@@ -22,7 +15,13 @@ export const columns: ColumnDef<TCols>[] = [
       const thisone = row.original;
 
       return (
-        <DeleteForm id={thisone.id} date={thisone.date} note={thisone.note} />
+        <DeleteForm
+          id={thisone.id}
+          date={thisone.date}
+          note={thisone.note}
+          missed={thisone.missed}
+          incorrect={thisone.incorrect}
+        />
       );
     },
   },
@@ -95,7 +94,7 @@ export const columns: ColumnDef<TCols>[] = [
       );
     },
     sortingFn: (rowA, rowB, columnId) => {
-      const typeValue = (row: TCols) => {
+      const typeValue = (row: TWarfarinAccidentForm) => {
         if (row.missed && row.incorrect) return 0;
         if (row.missed) return 1;
         if (row.incorrect) return 2;
