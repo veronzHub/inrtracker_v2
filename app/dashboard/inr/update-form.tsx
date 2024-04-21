@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -38,20 +37,9 @@ import { cn } from "@/lib/utils";
 import { inrPut } from "@/app/actions/inr";
 import { InrSchema } from "./formSchema";
 import { useState } from "react";
+import { TInrForm } from "@/types/inr";
 
-type TUpdateInrForm = {
-  inrid: number;
-  note: string | null;
-  date: string | null;
-  inr: number | null;
-};
-
-export default function UpdateInrForm({
-  inrid,
-  note,
-  date,
-  inr,
-}: TUpdateInrForm) {
+export default function UpdateInrForm({ id, note, date, inr }: TInrForm) {
   const [open, setOpen] = useState(false);
 
   const form = useForm<z.infer<typeof InrSchema>>({
@@ -59,7 +47,7 @@ export default function UpdateInrForm({
     defaultValues: {
       date: new Date(date.replace(/-/g, "/")),
       inr: inr,
-      note: note,
+      note: note || "",
     },
   });
 
@@ -78,7 +66,7 @@ export default function UpdateInrForm({
     formData.append("inr", String(values.inr));
     formData.append("note", String(values.note));
 
-    await inrPut(formData, inrid);
+    await inrPut(formData, id);
 
     setOpen(false);
   };

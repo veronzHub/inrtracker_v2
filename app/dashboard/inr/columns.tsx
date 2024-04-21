@@ -8,8 +8,8 @@ import UpdateInrForm from "./update-form";
 type TCols = {
   id: number;
   note: string | null;
-  date: string | null;
-  inr: number | null;
+  date: string;
+  inr: number;
 };
 
 export const columns: ColumnDef<TCols>[] = [
@@ -22,7 +22,7 @@ export const columns: ColumnDef<TCols>[] = [
 
       return (
         <DeleteForm
-          inrid={thisone.id}
+          id={thisone.id}
           date={thisone.date}
           inr={thisone.inr}
           note={thisone.note}
@@ -39,7 +39,7 @@ export const columns: ColumnDef<TCols>[] = [
 
       return (
         <UpdateInrForm
-          inrid={thisone.id}
+          id={thisone.id}
           date={thisone.date}
           inr={thisone.inr}
           note={thisone.note}

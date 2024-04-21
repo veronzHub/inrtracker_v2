@@ -12,16 +12,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { TInrForm } from "@/types/inr";
 import { AiFillDelete } from "react-icons/ai";
 
-type TDeleteForm = {
-  inrid: number;
-  note: string | null;
-  date: string | null;
-  inr: number | null;
-};
-
-export default function DeleteForm({ inrid, note, date, inr }: TDeleteForm) {
+export default function DeleteForm({ id, note, date, inr }: TInrForm) {
   return (
     <>
       <AlertDialog>
@@ -35,13 +29,14 @@ export default function DeleteForm({ inrid, note, date, inr }: TDeleteForm) {
               <p className="mb-3">Deleting this entry cannot be undone.</p>
               <p>
                 <b>Date:</b>{" "}
-                {new Date(
-                  date?.replace(/-/g, "/") as string
-                ).toLocaleDateString("en-US", {
-                  month: "2-digit",
-                  day: "2-digit",
-                  year: "numeric",
-                })}
+                {new Date(date.replace(/-/g, "/") as string).toLocaleDateString(
+                  "en-US",
+                  {
+                    month: "2-digit",
+                    day: "2-digit",
+                    year: "numeric",
+                  }
+                )}
               </p>
               <p>
                 <b>INR:</b> {inr}
@@ -55,7 +50,7 @@ export default function DeleteForm({ inrid, note, date, inr }: TDeleteForm) {
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
               className="bg-red-500 hover:bg-red-700"
-              onClick={async () => await inrDelete(inrid)}
+              onClick={async () => await inrDelete(id)}
             >
               Yes, Delete
             </AlertDialogAction>

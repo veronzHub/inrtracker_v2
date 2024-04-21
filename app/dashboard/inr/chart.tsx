@@ -16,6 +16,7 @@ import {
 } from "chart.js";
 import annotationPlugin from "chartjs-plugin-annotation";
 import Spinner from "@/components/ui/spinner";
+import { TInrForm } from "@/types/inr";
 
 // declare module "chart.js" {
 //   interface PluginOptionsByType<TType extends ChartType> {
@@ -44,12 +45,7 @@ Chart.register(
 );
 
 type TInrChart = {
-  data: {
-    id: number;
-    inr: number | null;
-    date: string | null;
-    note: string | null;
-  }[];
+  data: TInrForm[];
 };
 
 export default function InrChart({ data }: TInrChart) {

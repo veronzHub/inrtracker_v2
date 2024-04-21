@@ -29,29 +29,29 @@ export type Database = {
       }
       inrs: {
         Row: {
-          auth_uid: string | null
+          auth_uid: string
           created_at: string
-          date: string | null
+          date: string
           id: number
-          inr: number | null
+          inr: number
           note: string | null
           updated_at: string | null
         }
         Insert: {
-          auth_uid?: string | null
+          auth_uid?: string
           created_at?: string
-          date?: string | null
+          date: string
           id?: number
-          inr?: number | null
+          inr: number
           note?: string | null
           updated_at?: string | null
         }
         Update: {
-          auth_uid?: string | null
+          auth_uid?: string
           created_at?: string
-          date?: string | null
+          date?: string
           id?: number
-          inr?: number | null
+          inr?: number
           note?: string | null
           updated_at?: string | null
         }
@@ -64,21 +64,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
-      }
-      notes: {
-        Row: {
-          id: number
-          title: string | null
-        }
-        Insert: {
-          id?: number
-          title?: string | null
-        }
-        Update: {
-          id?: number
-          title?: string | null
-        }
-        Relationships: []
       }
       warfarin: {
         Row: {
@@ -110,35 +95,76 @@ export type Database = {
         }
         Relationships: []
       }
-      warfarin_dosages: {
+      warfarin_accidents: {
         Row: {
-          auth_uid: string | null
+          auth_uid: string
           created_at: string
-          day_of_week: number | null
-          dose: number | null
+          date: string
           id: number
-          start_date: number | null
-          strength: number | null
+          incorrect: boolean
+          missed: boolean
+          note: string | null
           updated_at: string | null
         }
         Insert: {
-          auth_uid?: string | null
+          auth_uid?: string
           created_at?: string
-          day_of_week?: number | null
-          dose?: number | null
+          date: string
           id?: number
-          start_date?: number | null
-          strength?: number | null
+          incorrect?: boolean
+          missed?: boolean
+          note?: string | null
           updated_at?: string | null
         }
         Update: {
-          auth_uid?: string | null
+          auth_uid?: string
           created_at?: string
-          day_of_week?: number | null
-          dose?: number | null
+          date?: string
           id?: number
-          start_date?: number | null
-          strength?: number | null
+          incorrect?: boolean
+          missed?: boolean
+          note?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_warfarin_missed_dosages_auth_uid_fkey"
+            columns: ["auth_uid"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      warfarin_dosages: {
+        Row: {
+          auth_uid: string
+          created_at: string
+          day_of_week: number
+          dose: number
+          id: number
+          start_date: number
+          strength: number
+          updated_at: string | null
+        }
+        Insert: {
+          auth_uid?: string
+          created_at?: string
+          day_of_week: number
+          dose: number
+          id?: number
+          start_date: number
+          strength: number
+          updated_at?: string | null
+        }
+        Update: {
+          auth_uid?: string
+          created_at?: string
+          day_of_week?: number
+          dose?: number
+          id?: number
+          start_date?: number
+          strength?: number
           updated_at?: string | null
         }
         Relationships: [
@@ -160,7 +186,14 @@ export type Database = {
             foreignKeyName: "public_warfarin_dosages_start_date_fkey"
             columns: ["start_date"]
             isOneToOne: false
-            referencedRelation: "warfarin_schedule"
+            referencedRelation: "query_warfarin_schedules_and_doses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_warfarin_dosages_start_date_fkey"
+            columns: ["start_date"]
+            isOneToOne: false
+            referencedRelation: "warfarin_schedules"
             referencedColumns: ["id"]
           },
           {
@@ -174,24 +207,24 @@ export type Database = {
       }
       warfarin_preferences: {
         Row: {
-          auth_uid: string | null
+          auth_uid: string
           created_at: string
           id: number
-          pill_strength: number | null
+          pill_strength: number
           updated_at: string | null
         }
         Insert: {
-          auth_uid?: string | null
+          auth_uid?: string
           created_at?: string
           id?: number
-          pill_strength?: number | null
+          pill_strength: number
           updated_at?: string | null
         }
         Update: {
-          auth_uid?: string | null
+          auth_uid?: string
           created_at?: string
           id?: number
-          pill_strength?: number | null
+          pill_strength?: number
           updated_at?: string | null
         }
         Relationships: [
@@ -211,26 +244,26 @@ export type Database = {
           },
         ]
       }
-      warfarin_schedule: {
+      warfarin_schedules: {
         Row: {
-          auth_uid: string | null
+          auth_uid: string
           created_at: string
           id: number
-          start_date: string | null
+          start_date: string
           updated_at: string | null
         }
         Insert: {
-          auth_uid?: string | null
+          auth_uid?: string
           created_at?: string
           id?: number
-          start_date?: string | null
+          start_date: string
           updated_at?: string | null
         }
         Update: {
-          auth_uid?: string | null
+          auth_uid?: string
           created_at?: string
           id?: number
-          start_date?: string | null
+          start_date?: string
           updated_at?: string | null
         }
         Relationships: [
@@ -245,7 +278,20 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      query_warfarin_schedules_and_doses: {
+        Row: {
+          friday: Json | null
+          id: number | null
+          monday: Json | null
+          saturday: Json | null
+          start_date: string | null
+          sunday: Json | null
+          thursday: Json | null
+          tuesday: Json | null
+          wednesday: Json | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
