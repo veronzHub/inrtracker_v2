@@ -2,6 +2,8 @@
 
 INRTracker is designed to assist individuals taking Warfarin in monitoring their INR levels, dosage schedules, and tracking missed or incorrect dosages.
 
+https://www.inrtracker.com
+
 ## Table of Contents
 
 - [Overview](#overview)
@@ -41,7 +43,7 @@ To install and set up INRTracker locally, follow these steps:
    ```
    $ npm install
    ```
-3. Set up the database connection to Supabase.
+3. Set up the database connection to Supabase. https://supabase.com/
 
 ## Usage
 
