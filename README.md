@@ -41,16 +41,13 @@ To install and set up INRTracker locally, follow these steps:
    ```
    $ npm install
    ```
-3. Set up the database connection to Supabase. [Add instructions here if necessary.]
-
-The database is hosted on Supabase.
+3. Set up the database connection to Supabase.
 
 ## Usage
 
 To start the application locally, run the following command:
 
 ```bash
-# Example usage commands
 $ npm run dev
 ```
 
